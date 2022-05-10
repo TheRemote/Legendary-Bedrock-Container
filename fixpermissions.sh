@@ -29,10 +29,10 @@ done
 # Take ownership of files
 echo "Taking ownership of all server files/folders in /minecraft..."
 if [[ $Automated == 1 ]]; then
-    sudo -n chown -R $(whoami) /minecraft
-    sudo -n chmod -R 755 /scripts/*.sh
-    sudo -n chmod 755 /minecraft/bedrock_server
-    sudo -n chmod +x /minecraft/bedrock_server
+    sudo -n chown -R $(whoami) /minecraft >/dev/null 2>&1
+    sudo -n chmod -R 755 /scripts/*.sh >/dev/null 2>&1
+    sudo -n chmod 755 /minecraft/bedrock_server >/dev/null 2>&1
+    sudo -n chmod +x /minecraft/bedrock_server >/dev/null 2>&1
 else
     sudo chown -Rv $(whoami) /minecraft
     sudo chmod -Rv 755 /scripts/*.sh
