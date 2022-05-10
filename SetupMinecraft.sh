@@ -90,7 +90,7 @@ Check_Architecture () {
 
     # Retrieve depends.zip from GitHub repository
     cd /scripts
-    curl -H "Accept-Encoding: identity" -L -o depends.zip https://raw.githubusercontent.com/TheRemote/minecraftdrockServer/master/depends.zip
+    curl -H "Accept-Encoding: identity" -L -o depends.zip https://raw.githubusercontent.com/TheRemote/MinecraftBedrockServer/master/depends.zip
     unzip depends.zip
     rm -f depends.zip
     sudo mkdir /lib64

@@ -13,6 +13,36 @@ if [ ! -d '/minecraft' ]; then
   exit 1
 fi
 
+
+# Check CPU archtecture to see if we need to do anything special for the platform the server is running on
+echo "Getting system CPU architecture..."
+CPUArch=$(uname -m)
+echo "System Architecture: $CPUArch"
+
+# Check for ARM architecture
+if [[ "$CPUArch" == *"aarch"* || "$CPUArch" == *"arm"* ]]; then
+    # ARM architecture detected -- download QEMU and dependency libraries
+    echo "ARM platform detected -- checking dependencies..."
+
+    if [ -e /minecraft/ ]; then
+        echo "Dependencies are present"
+    else
+        # Retrieve depends.zip from GitHub repository
+        cd /minecraft
+        curl -H "Accept-Encoding: identity" -L -o depends.zip https://raw.githubusercontent.com/TheRemote/MinecraftBedrockServer/master/depends.zip
+        unzip depends.zip
+        rm -f depends.zip
+    fi
+fi
+
+# Check for x86 (32 bit) architecture
+if [[ "$CPUArch" == *"i386"* || "$CPUArch" == *"i686"* ]]; then
+# 32 bit attempts have not been successful -- notify user to install 64 bit OS
+echo "You are running a 32 bit operating system (i386 or i686) and the Bedrock Dedicated Server has only been released for 64 bit (x86_64).  If you have a 64 bit processor please install a 64 bit operating system to run the Bedrock dedicated server!"
+exit 1
+fi
+
+
 # Randomizer for user agent
 RandNum=$(echo $((1 + $RANDOM % 5000)))
 
@@ -23,8 +53,6 @@ if [ -z "$PortIPV6" ]; then
   PortIPV6="19133"
 fi
 echo "Ports used - IPV4: $PortIPV4 - IPV6: $PortIPV6"
-sed -i "/server-port=/c\server-port=$PortIPV4" /minecraft/server.properties
-sed -i "/server-portv6=/c\server-portv6=$PortIPV6" /minecraft/server.properties
 
 # Set bedrock file permissions
 echo "Setting server file permissions..."
@@ -123,9 +151,12 @@ else
     fi
 fi
 
-echo "Starting Minecraft server.  To view window type screen -r minecraftbe"
-echo "To minimize the window and let the server run in the background, press Ctrl+A then Ctrl+D"
+# Change ports in server.properties
+sed -i "/server-port=/c\server-port=$PortIPV4" /minecraft/server.properties
+sed -i "/server-portv6=/c\server-portv6=$PortIPV6" /minecraft/server.properties
 
+# Start server
+echo "Starting Minecraft server..."
 BASH_CMD="LD_LIBRARY_PATH=/minecraft /minecraft/bedrock_server"
 if command -v gawk &> /dev/null; then
   BASH_CMD+=$' | gawk \'{ print strftime(\"[%Y-%m-%d %H:%M:%S]\"), $0 }\''
