@@ -13,36 +13,6 @@ if [ ! -d '/minecraft' ]; then
   exit 1
 fi
 
-
-# Check CPU archtecture to see if we need to do anything special for the platform the server is running on
-echo "Getting system CPU architecture..."
-CPUArch=$(uname -m)
-echo "System Architecture: $CPUArch"
-
-# Check for ARM architecture
-if [[ "$CPUArch" == *"aarch"* || "$CPUArch" == *"arm"* ]]; then
-    # ARM architecture detected -- download QEMU and dependency libraries
-    echo "ARM platform detected -- checking dependencies..."
-
-    if [ -e /minecraft/ ]; then
-        echo "Dependencies are present"
-    else
-        # Retrieve depends.zip from GitHub repository
-        cd /minecraft
-        curl -H "Accept-Encoding: identity" -L -o depends.zip https://raw.githubusercontent.com/TheRemote/MinecraftBedrockServer/master/depends.zip
-        unzip depends.zip
-        rm -f depends.zip
-    fi
-fi
-
-# Check for x86 (32 bit) architecture
-if [[ "$CPUArch" == *"i386"* || "$CPUArch" == *"i686"* ]]; then
-# 32 bit attempts have not been successful -- notify user to install 64 bit OS
-echo "You are running a 32 bit operating system (i386 or i686) and the Bedrock Dedicated Server has only been released for 64 bit (x86_64).  If you have a 64 bit processor please install a 64 bit operating system to run the Bedrock dedicated server!"
-exit 1
-fi
-
-
 # Randomizer for user agent
 RandNum=$(echo $((1 + $RANDOM % 5000)))
 
@@ -53,10 +23,6 @@ if [ -z "$PortIPV6" ]; then
   PortIPV6="19133"
 fi
 echo "Ports used - IPV4: $PortIPV4 - IPV6: $PortIPV6"
-
-# Set bedrock file permissions
-echo "Setting server file permissions..."
-sudo bash /scripts/fixpermissions.sh -a >/dev/null 2>&1
 
 # Check if server is already started
 if screen -list | grep -q "\.minecraftbe"; then
@@ -147,7 +113,9 @@ else
         else
           unzip -o "downloads/$DownloadFile"
         fi
-        Permissions=$(chmod +x /minecraft/bedrock_server >/dev/null 2>&1)
+        
+        # Take ownership of server files and set correct permissions
+        Permissions=$(sudo bash /scripts/fixpermissions.sh -a)
     fi
 fi
 

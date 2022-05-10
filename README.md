@@ -6,7 +6,7 @@ This is the Docker containerized version of my <a href="https://github.com/TheRe
   <li>Sets up the official Minecraft Bedrock Server (currently in alpha testing)</li>
   <li>Fully operational Minecraft Bedrock edition server in a couple of minutes</li>
   <li>Adds logging with timestamps to "logs" directory</li>
-  <li>All Docker platforms supported</li>
+  <li>All Docker platforms supported including Raspberry Pi</li>
   <li>Automatic backups when server restarts</li>
   <li>Supports multiple instances -- you can run multiple Bedrock servers on the same system</li>
   <li>Updates automatically to the latest version when server is started</li>
