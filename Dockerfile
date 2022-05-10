@@ -1,4 +1,4 @@
-# Minecraft Server Docker Container Permissions Fix Script
+# Minecraft Bedrock Server Docker Container Permissions Fix Script
 # Author: James A. Chambers - https://jamesachambers.com/
 # GitHub Repository: https://github.com/TheRemote/Legendary-Bedrock-Container
 
