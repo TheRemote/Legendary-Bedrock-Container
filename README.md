@@ -8,11 +8,11 @@ First you must create a named Docker volume.  This can be done with:<br>
 Now you may launch the server and open the ports necessary with one of the following Docker launch commands:<br>
 <br>
 With default ports:
-<pre>docker run -it -v yourvolumename -p 19132:19132/udp -p 19132:19132/tcp -p 19133:19133/udp -p 19133:19133/udp</pre>
+<pre>docker run -it -v yourvolumename:/minecraft -p 19132:19132/udp -p 19132:19132 -p 19133:19133/udp -p 19133:19133 05jchambers/legendary-bedrock-container:latest</pre>
 With custom ports:
-<pre>docker run -it -v yourvolumename -p 12345:12345/udp -p 12345:12345/tcp -p 12346:12346/udp -p 12346:12346/udp -e PortIPV4=12345 -e PortIPV6=12346</pre>
+<pre>docker run -it -v yourvolumename:/minecraft -p 12345:12345/udp -p 12345:12345 -p 12346:12346/udp -p 12346:12346 -e PortIPV4=12345 -e PortIPV6=12346 05jchambers/legendary-bedrock-container:latest</pre>
 IPV4 only:
-<pre>docker run -it -v yourvolumename -p 19132:19132/udp -p 19132:19132/tcp</pre>
+<pre>docker run -it -v yourvolumename:/minecraft -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
 
 <h3>Features</h3>
 <ul>
