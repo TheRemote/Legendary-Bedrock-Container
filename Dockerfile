@@ -1,5 +1,5 @@
 # Minecraft Bedrock Server Docker Container
-# Author: James A. Chambers - https://jamesachambers.com/
+# Author: James A. Chambers - https://jamesachambers.com/legendary-minecraft-bedrock-container/
 # GitHub Repository: https://github.com/TheRemote/Legendary-Bedrock-Container
 
 # Use current Ubuntu LTS version

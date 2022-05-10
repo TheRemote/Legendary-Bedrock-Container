@@ -1,6 +1,6 @@
 #!/bin/bash
 # Minecraft Server Docker Container Permissions Fix Script
-# Author: James A. Chambers - https://jamesachambers.com/
+# Author: James A. Chambers - https://jamesachambers.com/legendary-minecraft-bedrock-container/
 # GitHub Repository: https://github.com/TheRemote/Legendary-Bedrock-Container
 
 # Takes ownership of server files to fix common permission errors such as access denied

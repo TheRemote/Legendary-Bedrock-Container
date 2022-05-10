@@ -1,6 +1,6 @@
 #!/bin/bash
 # Legendary Bedrock Container setup script - image build time
-# Author: James A. Chambers - https://jamesachambers.com/minecraft-bedrock-edition-ubuntu-dedicated-server-guide/
+# Author: James A. Chambers - https://jamesachambers.com/legendary-minecraft-bedrock-container/
 
 Check_Dependencies() {
   # Install dependencies required to run Minecraft server in the background

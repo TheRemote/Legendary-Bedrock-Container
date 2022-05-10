@@ -1,6 +1,6 @@
 #!/bin/bash
 # Minecraft Bedrock Docker server startup script using screen
-# Author: James A. Chambers - https://jamesachambers.com/
+# Author: James A. Chambers - https://jamesachambers.com/legendary-minecraft-bedrock-container/
 # GitHub Repository: https://github.com/TheRemote/Legendary-Bedrock-Container
 
 echo "Minecraft Bedrock Server Docker script by James A. Chambers"
