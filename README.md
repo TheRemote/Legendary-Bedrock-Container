@@ -30,8 +30,7 @@ IPV4 only:
 The server data is stored where Docker stores your volumes.  This is typically a folder on the host OS that is shared and mounted with the container.  I'll give the usual locations here but if you're having trouble just do some Googling for your exact platform and you should find where Docker is storing the volume files.<br>
 <br>
 On Linux it's typically available at: <pre>/var/lib/docker/volumes/yourvolumename/_data</pre><br>
-On Windows it's at <pre>C:\ProgramData\DockerDesktop</pre> but may be located at something more like <pre>\wsl$\docker-desktop-data\version-pack-data\community\docker\volumes\</pre><br>if you are using WSL (Windows Subsystem for Linux)
-<br>
+On Windows it's at <pre>C:\ProgramData\DockerDesktop</pre> but may be located at something more like <pre>\wsl$\docker-desktop-data\version-pack-data\community\docker\volumes\</pre>if you are using WSL (Windows Subsystem for Linux<br>
 <br>
 On Mac it's typically <pre>~/Library/Containers/com.docker.docker/Data/vms/0/</pre><br>
 Most people will want to edit server.properties.  You can make the changes to the file and then restart the container to make them effective.<br>
