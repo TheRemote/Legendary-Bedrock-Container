@@ -10,7 +10,6 @@ This is the Docker containerized version of my <a href="https://github.com/TheRe
   <li>Automatic backups when server restarts</li>
   <li>Supports multiple instances -- you can run multiple Bedrock servers on the same system</li>
   <li>Updates automatically to the latest version when server is started</li>
-  <li>Easy control of server with start.sh, stop.sh and restart.sh scripts</li>
 </ul>
 
 <h3>Usage</h3>
