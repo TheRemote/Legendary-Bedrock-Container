@@ -14,6 +14,7 @@ The <a href="https://hub.docker.com/r/05jchambers/legendary-bedrock-container" t
   <li>Automatic backups when server restarts</li>
   <li>Supports multiple instances -- you can run multiple Bedrock servers on the same system</li>
   <li>Updates automatically to the latest version when server is started</li>
+  <li>Files stored in named Docker volume allowing for extremely easy access/editing and leveraging more advanced Docker features such as automatic volume backups</li>
 </ul>
 
 <h3>Usage</h3>
