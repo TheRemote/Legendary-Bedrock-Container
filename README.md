@@ -7,19 +7,19 @@ The <a href="https://hub.docker.com/r/05jchambers/legendary-bedrock-container" t
 <br>
 The <a href="https://github.com/TheRemote/Legendary-Java-Minecraft-Paper" target="_blank" rel="noopener">Java version of the Docker container is available here</a>.  This is for the Bedrock edition of Minecraft.<br>
 
-<h3>Features</h3>
+<h2>Features</h2>
 <ul>
   <li>Sets up the official Minecraft Bedrock Server (currently in alpha testing)</li>
   <li>Fully operational Minecraft Bedrock edition server in a couple of minutes</li>
   <li>Adds logging with timestamps to "logs" directory</li>
   <li>All Docker platforms supported including Raspberry Pi</li>
-  <li>Automatic backups when server restarts</li>
+  <li>Automatic backups when container/server restarts</li>
   <li>Supports multiple instances -- you can run multiple Bedrock servers on the same system</li>
   <li>Updates automatically to the latest version when server is started</li>
   <li>Files stored in named Docker volume allowing for extremely easy access/editing and leveraging more advanced Docker features such as automatic volume backups</li>
 </ul>
 
-<h3>Usage</h3>
+<h2>Usage</h2>
 First you must create a named Docker volume.  This can be done with:<br>
 <pre>docker volume create yourvolumename</pre>
 
@@ -32,7 +32,7 @@ With custom ports:
 IPV4 only:
 <pre>docker run -it -v yourvolumename:/minecraft -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
 
-<h3>Configuration / Accessing Server Files</h3>
+<h2>Configuration / Accessing Server Files</h2>
 The server data is stored where Docker stores your volumes.  This is typically a folder on the host OS that is shared and mounted with the container.  I'll give the usual locations here but if you're having trouble just do some Googling for your exact platform and you should find where Docker is storing the volume files.<br>
 <br>
 On Linux it's typically available at: <pre>/var/lib/docker/volumes/yourvolumename/_data</pre><br>
@@ -44,7 +44,7 @@ Backups are stored in the "backups" folder<br>
 <br>
 Log files with timestamps are stored in the "logs" folder.
 
-<h3>Buy A Coffee / Donate</h3>
+<h2>Buy A Coffee / Donate</h2>
 <p>People have expressed some interest in this (you are all saints, thank you, truly)</p>
 <ul>
  <li>PayPal: 05jchambers@gmail.com</li>
@@ -53,7 +53,7 @@ Log files with timestamps are stored in the "logs" folder.
  <li>Bitcoin (BTC): 3H6wkPnL1Kvne7dJQS8h7wB4vndB9KxZP7</li>
 </ul>
 
-<h3>Update History</h3>
+<h2>Update History</h2>
 <ul>
   <li>May 9th 2022</li>
     <ul>
