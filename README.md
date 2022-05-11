@@ -4,7 +4,9 @@ This is the Docker containerized version of my <a href="https://github.com/TheRe
 My <a href="https://jamesachambers.com/legendary-minecraft-bedrock-container/" target="_blank" rel="noopener">main blog article (and the best place for support) is here</a>.<br>
 The <a href="https://github.com/TheRemote/Legendary-Bedrock-Container" target="_blank" rel="noopener">official GitHub repository is located here</a>.<br>
 The <a href="https://hub.docker.com/r/05jchambers/legendary-bedrock-container" target="_blank" rel="noopener">official Docker Hub repository is located here</a>.<br>
- 
+<br>
+The <a href="https://github.com/TheRemote/Legendary-Java-Minecraft-Paper" target="_blank" rel="noopener">Java version of the Docker container is available here</a>.  This is for the Bedrock edition of Minecraft.<br>
+
 <h3>Features</h3>
 <ul>
   <li>Sets up the official Minecraft Bedrock Server (currently in alpha testing)</li>
