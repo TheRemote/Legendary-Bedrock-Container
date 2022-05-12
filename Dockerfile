@@ -3,7 +3,7 @@
 # GitHub Repository: https://github.com/TheRemote/Legendary-Bedrock-Container
 
 # Use current Ubuntu LTS version
-FROM ubuntu:20.04
+FROM --platform=linux/amd64 ubuntu:20.04 
 
 # Update apt
 RUN apt-get update 

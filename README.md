@@ -55,6 +55,10 @@ Log files with timestamps are stored in the "logs" folder.
 
 <h2>Update History</h2>
 <ul>
+  <li>May 12th 2022</li>
+    <ul>
+        <li>Added --platform=linux/amd64 to Dockerfile as on aarch64 platforms the container was not starting successfully without it (thanks Mootch <a href="https://github.com/TheRemote/MinecraftBedrockServer/issues/1">issue #1</a>).</li>
+    </ul>
   <li>May 9th 2022</li>
     <ul>
         <li>Initial release -- thanks to everyone who kept asking about it so I would finally put it together!</li>
