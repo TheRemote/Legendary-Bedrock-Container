@@ -25,7 +25,7 @@ fi
 echo "Ports used - IPV4: $PortIPV4 - IPV6: $PortIPV6"
 
 # Check if server is already started
-screen -wipe
+ScreenWipe=$(screen -wipe)
 if screen -list | grep -q "\.minecraftbe"; then
     echo "Server is already started!  Press screen -r minecraftbe to open it"
     exit 1
