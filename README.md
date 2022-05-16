@@ -55,6 +55,10 @@ Log files with timestamps are stored in the "logs" folder.
 
 <h2>Update History</h2>
 <ul>
+  <li>May 15th 2022</li>
+    <ul>
+        <li>Added screen -wipe to beginning of start.sh to prevent a startup issue that could occur if there was a "dead" screen instance (thanks grimholme <a href="https://github.com/TheRemote/Legendary-Bedrock-Container/issues/2">issue #2</a>).</li>
+    </ul>
   <li>May 12th 2022</li>
     <ul>
         <li>Added --platform=linux/amd64 to Dockerfile as on aarch64 platforms the container was not starting successfully without it (thanks Mootch, <a href="https://github.com/TheRemote/Legendary-Bedrock-Container/issues/1">issue #1</a>).</li>
