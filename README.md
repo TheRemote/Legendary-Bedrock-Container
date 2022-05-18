@@ -33,14 +33,24 @@ IPV4 only:
 <pre>docker run -it -v yourvolumename:/minecraft -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
 
 <h2>Configuration / Accessing Server Files</h2>
-The server data is stored where Docker stores your volumes.  This is typically a folder on the host OS that is shared and mounted with the container.  I'll give the usual locations here but if you're having trouble just do some Googling for your exact platform and you should find where Docker is storing the volume files.<br>
+The server data is stored where Docker stores your volumes.  This is typically a folder on the host OS that is shared and mounted with the container.<br>
+You can find your exact path by typing: <pre>docker volume inspect yourvolumename</pre>  This will give you the fully qualified path to your volume like this:
+<pre>{
+        "CreatedAt": "2022-05-09T21:08:34-06:00",
+        "Driver": "local",
+        "Labels": {},
+        "Mountpoint": "/var/lib/docker/volumes/minecraftbe/_data",
+        "Name": "minecraftbe",
+        "Options": {},
+        "Scope": "local"
+    }</pre>
 <br>
 On Linux it's typically available at: <pre>/var/lib/docker/volumes/yourvolumename/_data</pre><br>
 On Windows it's at <pre>C:\ProgramData\DockerDesktop</pre> but if you are using WSL (Windows Subsystem for Linux) it may be located at something more like <pre>\wsl$\docker-desktop-data\version-pack-data\community\docker\volumes\</pre><br>
 On Mac it's typically <pre>~/Library/Containers/com.docker.docker/Data/vms/0/</pre><br>
 Most people will want to edit server.properties.  You can make the changes to the file and then restart the container to make them effective.<br>
 <br>
-Backups are stored in the "backups" folder<br>
+Backups of the Minecraft are server are created each time the server starts and are stored in the "backups" folder<br>
 <br>
 Log files with timestamps are stored in the "logs" folder.
 
