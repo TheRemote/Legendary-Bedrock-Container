@@ -41,6 +41,7 @@ Check_Dependencies() {
         echo "Performing manual libssl1.1 installation..."
         
         sudo DEBIAN_FRONTEND=noninteractive dpkg -i /scripts/libssl.deb
+        rm -f /scripts/libssl.deb
         SSLVer=$(apt-cache show libssl1.1 | grep Version | awk 'NR==1{ print $2 }')
         if [[ "$SSLVer" ]]; then
           echo "Manual libssl1.1 installation successful!"
