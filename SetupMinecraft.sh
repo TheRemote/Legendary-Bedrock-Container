@@ -32,17 +32,15 @@ Check_Dependencies() {
     sudo DEBIAN_FRONTEND=noninteractive apt-get install libcrypt1 -yqq
 
     # Install libssl 1.1 if available
-    SSLVer=$(apt-cache show libssl1.1 | grep Version | awk 'NR==1{ print $2 }')
+    SSLVer=$(apt-cache show libssl1.1 2>&1 | grep Version | awk 'NR==1{ print $2 }')
     if [[ "$SSLVer" ]]; then
       sudo DEBIAN_FRONTEND=noninteractive apt-get install libssl1.1 -yqq
     else
       CPUArch=$(uname -m)
       if [[ "$CPUArch" == *"x86_64"* ]]; then
-        echo "No libssl1.1 available in repositories -- attempting manual install"
+        echo "Performing manual libssl1.1 installation..."
         
-        sudo curl -o libssl.deb -k -L http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1l-1ubuntu1.3_amd64.deb
-        sudo dpkg -i libssl.deb
-        sudo rm libssl.deb
+        sudo DEBIAN_FRONTEND=noninteractive dpkg -i /scripts/libssl.deb
         SSLVer=$(apt-cache show libssl1.1 | grep Version | awk 'NR==1{ print $2 }')
         if [[ "$SSLVer" ]]; then
           echo "Manual libssl1.1 installation successful!"

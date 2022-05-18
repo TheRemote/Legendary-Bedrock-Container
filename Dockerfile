@@ -3,7 +3,7 @@
 # GitHub Repository: https://github.com/TheRemote/Legendary-Bedrock-Container
 
 # Use current Ubuntu LTS version
-FROM --platform=linux/amd64 ubuntu:20.04 
+FROM --platform=linux/amd64 ubuntu:latest
 
 # Update apt
 RUN apt-get update 
@@ -26,6 +26,7 @@ EXPOSE 19133/udp
 # Copy scripts to minecraftbe folder and make them executable
 RUN mkdir /scripts
 COPY *.sh /scripts/
+COPY libssl.deb /scripts/
 RUN chmod -R +x /scripts/*.sh
 
 # Run SetupMinecraft.sh
