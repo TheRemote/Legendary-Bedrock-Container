@@ -9,7 +9,7 @@ FROM --platform=linux/amd64 ubuntu:latest
 RUN apt-get update 
 
 # Fetch dependencies
-RUN DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 apt-utils libcurl4-openssl-dev ca-certificates -yqq
+RUN DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 apt-utils libcurl4-openssl-dev ca-certificates qemu-user-static binfmt-support -yqq
 
 # Set port environment variables
 ENV PortIPV4=19132

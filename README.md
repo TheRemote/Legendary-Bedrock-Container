@@ -76,6 +76,7 @@ Log files with timestamps are stored in the "logs" folder.
 <ul>
   <li>May 21st 2022</li>
   <ul>
+    <li>Added qemu-user-static and binfmt-support to build dependencies</li>
     <li>Add additional documentation for ARM platforms (qemu-user-static and binfmt-support packages required on these platforms i.e. sudo apt install qemu-user-static binfmt-support)</li>
   </ul>
   <li>May 17th 2022</li>
