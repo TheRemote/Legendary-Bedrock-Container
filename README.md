@@ -32,6 +32,15 @@ With custom ports:
 IPV4 only:
 <pre>docker run -it -v yourvolumename:/minecraft -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
 
+<h2>ARM Platforms (Raspberry Pi, others)</h2>
+The container works fine on these platforms provided you have the following packages installed:<br>
+<ul>
+<li>binfmt-utils</li>
+<li>qemu-user-static</li>
+</ul>
+<br>
+These can be installed with: <pre>sudo apt install qemu-user-static binfmt-support</pre>
+
 <h2>Configuration / Accessing Server Files</h2>
 The server data is stored where Docker stores your volumes.  This is typically a folder on the host OS that is shared and mounted with the container.<br>
 You can find your exact path by typing: <pre>docker volume inspect yourvolumename</pre>  This will give you the fully qualified path to your volume like this:
@@ -65,7 +74,11 @@ Log files with timestamps are stored in the "logs" folder.
 
 <h2>Update History</h2>
 <ul>
-  <li>May 17h 2022</li>
+  <li>May 21st 2022</li>
+  <ul>
+    <li>Add additional documentation for ARM platforms (qemu-user-static and binfmt-support packages required on these platforms i.e. sudo apt install qemu-user-static binfmt-support)</li>
+  </ul>
+  <li>May 17th 2022</li>
   <ul>
     <li>Bump Dockerfile base image to ubuntu:latest</li>
     <li>Add libssl1.1 manual installation baked into base image</li>
