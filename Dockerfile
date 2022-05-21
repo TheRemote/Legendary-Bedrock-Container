@@ -2,8 +2,8 @@
 # Author: James A. Chambers - https://jamesachambers.com/legendary-minecraft-bedrock-container/
 # GitHub Repository: https://github.com/TheRemote/Legendary-Bedrock-Container
 
-# Use current Ubuntu LTS version
-FROM --platform=linux/amd64 ubuntu:latest
+# Use "Impish" Ubuntu version
+FROM ubuntu:21.10
 
 # Update apt
 RUN apt-get update 
