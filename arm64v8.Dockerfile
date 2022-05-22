@@ -13,6 +13,7 @@ FROM --platform=linux/arm64/v8 ubuntu:21.10
 
 # Add QEMU
 COPY --from=builder /usr/bin/qemu-aarch64-static /usr/bin/
+COPY qemu-x86_64-static-arm64v8 /usr/bin/qemu-x86_64-static
 
 # Copy bedrock_server dynamically linked dependencies
 RUN mkdir -p /lib64/
