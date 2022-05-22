@@ -8,6 +8,9 @@ FROM ubuntu:21.10 AS builder
 # Use "Impish" Ubuntu version
 FROM --platform=linux/ppc64le ubuntu:21.10
 
+# Add QEMU
+COPY --from=builder qemu-*-static /usr/bin/
+
 # Update apt
 RUN apt-get update 
 
