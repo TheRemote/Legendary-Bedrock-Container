@@ -31,6 +31,7 @@ Check_Dependencies() {
     sudo DEBIAN_FRONTEND=noninteractive apt-get install libc6 -yqq
     sudo DEBIAN_FRONTEND=noninteractive apt-get install libcrypt1 -yqq
     sudo DEBIAN_FRONTEND=noninteractive apt-get install qemu -yqq
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install zlib1g -yqq
 
     # Install libssl 1.1 if available
     SSLVer=$(apt-cache show libssl1.1 2>&1 | grep Version | awk 'NR==1{ print $2 }')
