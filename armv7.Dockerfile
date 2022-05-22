@@ -19,7 +19,7 @@ COPY --from=builder /usr/bin/qemu-arm-static /usr/bin/
 
 # Copy ld-linux-x86-64.so.2
 RUN mkdir -p /lib64/
-RUN mkdir -p x86_64-linux-gnu
+RUN mkdir -p /lib/x86_64-linux-gnu
 COPY --from=builder /lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2
 COPY --from=builder /lib/x86_64-linux-gnu/libz.so.1 /lib/x86_64-linux-gnu/libz.so.1
 COPY --from=builder /lib/x86_64-linux-gnu/libnsl.so.1 /lib/x86_64-linux-gnu/libnsl.so.1
