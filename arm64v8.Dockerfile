@@ -11,6 +11,9 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install qemu-user-s
 # Use "Impish" Ubuntu version
 FROM --platform=linux/arm64/v8 ubuntu:21.10
 
+# Add QEMU
+COPY --from=builder /usr/bin/qemu-aarch64-static /usr/bin/
+
 # Copy bedrock_server dynamically linked dependencies
 RUN mkdir -p /lib64/
 RUN mkdir -p /lib/x86_64-linux-gnu
