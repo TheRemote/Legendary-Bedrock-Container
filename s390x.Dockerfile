@@ -3,7 +3,7 @@
 # GitHub Repository: https://github.com/TheRemote/Legendary-Bedrock-Container
 
 # Use "Impish" Ubuntu version
-FROM ubuntu:21.10
+FROM --platform=linux/s390x ubuntu:21.10
 
 # Update apt
 RUN apt-get update 
