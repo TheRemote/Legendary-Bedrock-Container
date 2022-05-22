@@ -2,6 +2,9 @@
 # Author: James A. Chambers - https://jamesachambers.com/legendary-minecraft-bedrock-container/
 # GitHub Repository: https://github.com/TheRemote/Legendary-Bedrock-Container
 
+# Use "Impish" Ubuntu version for builder
+FROM ubuntu:21.10 AS builder
+
 # Use "Impish" Ubuntu version
 FROM --platform=linux/amd64 ubuntu:21.10
 
