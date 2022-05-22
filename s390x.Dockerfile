@@ -6,7 +6,7 @@
 FROM ubuntu:21.10 AS builder
 
 # Update apt
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install qemu-user-static binfmt-support
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install qemu-user-static binfmt-support -yqq
 
 # Use "Impish" Ubuntu version
 FROM --platform=linux/s390x ubuntu:21.10
