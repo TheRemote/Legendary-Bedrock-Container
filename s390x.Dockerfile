@@ -16,6 +16,7 @@ FROM --platform=linux/s390x ubuntu:21.10
 
 # Add QEMU
 COPY --from=builder /usr/bin/qemu-s390x-static /usr/bin/
+COPY --from=builder /usr/bin/qemu-x86_64-static /usr/bin/
 
 # Fetch dependencies
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 apt-utils libcurl4-openssl-dev ca-certificates binfmt-support -yqq
