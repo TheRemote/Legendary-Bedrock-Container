@@ -17,6 +17,11 @@ FROM --platform=linux/ppc64le ubuntu:21.10
 # Add QEMU
 COPY --from=builder /usr/bin/qemu-ppc64le-static /usr/bin/
 
+# Copy ld-linux-x86-64.so.2
+RUN mkdir -p /lib64
+COPY --from=builder /lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2
+
+
 # Fetch dependencies
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 apt-utils libcurl4-openssl-dev ca-certificates binfmt-support -yqq
 
