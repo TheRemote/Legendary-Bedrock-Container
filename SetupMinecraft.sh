@@ -6,7 +6,7 @@ Check_Dependencies() {
   # Install dependencies required to run Minecraft server in the background
   if command -v apt-get &> /dev/null; then
     echo "Updating apt.."
-    sudo apt-get update
+    sudo apt-get update && sudo apt dist-upgrade -y
 
     echo "Checking and installing dependencies.."
     if ! command -v curl &> /dev/null; then sudo DEBIAN_FRONTEND=noninteractive apt-get install curl -yqq; fi
@@ -30,9 +30,6 @@ Check_Dependencies() {
 
     sudo DEBIAN_FRONTEND=noninteractive apt-get install libc6 -yqq
     sudo DEBIAN_FRONTEND=noninteractive apt-get install libcrypt1 -yqq
-
-    sudo rm -rf /usr/bin/qemu-*
-    InstallQEMU=$(sudo DEBIAN_FRONTEND=noninteractive apt-get install qemu-user-static -yqq)
 
     # Install libssl 1.1 if available
     SSLVer=$(apt-cache show libssl1.1 2>&1 | grep Version | awk 'NR==1{ print $2 }')

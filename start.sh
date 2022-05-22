@@ -126,7 +126,12 @@ sed -i "/server-portv6=/c\server-portv6=$PortIPV6" /minecraft/server.properties
 
 # Start server
 echo "Starting Minecraft server..."
-BASH_CMD="LD_LIBRARY_PATH=/minecraft /minecraft/bedrock_server"
+CPUArch=$(uname -m)
+if [[ "$CPUArch" == *"x86_64"* ]]; then
+    BASH_CMD="LD_LIBRARY_PATH=/minecraft /minecraft/bedrock_server"
+else
+    BASH_CMD="qemu-x86_64-static LD_LIBRARY_PATH=/minecraft /minecraft/bedrock_server"
+fi
 if command -v gawk &> /dev/null; then
   BASH_CMD+=$' | gawk \'{ print strftime(\"[%Y-%m-%d %H:%M:%S]\"), $0 }\''
 else
