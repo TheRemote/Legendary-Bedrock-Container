@@ -126,7 +126,7 @@ sed -i "/server-portv6=/c\server-portv6=$PortIPV6" /minecraft/server.properties
 
 # Start server
 echo "Starting Minecraft server..."
-BASH_CMD="LD_LIBRARY_PATH=/minecraft /minecraft/bedrock_server"
+BASH_CMD="/minecraft/bedrock_server"
 if command -v gawk &> /dev/null; then
   BASH_CMD+=$' | gawk \'{ print strftime(\"[%Y-%m-%d %H:%M:%S]\"), $0 }\''
 else
