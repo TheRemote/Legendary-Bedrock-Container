@@ -6,16 +6,13 @@
 FROM ubuntu:21.10 AS builder
 
 # Update apt
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils -yqq
-
-# Clean apt
-RUN apt-get clean && apt-get autoclean
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils -yqq && rm -rf /var/cache/apt/*
 
 # Use "Impish" Ubuntu version
 FROM --platform=linux/amd64 ubuntu:21.10
 
 # Fetch dependencies
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 apt-utils libcurl4-openssl-dev ca-certificates binfmt-support -yqq
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 apt-utils libcurl4-openssl-dev ca-certificates binfmt-support -yqq && rm -rf /var/cache/apt/*
 
 # Set port environment variables
 ENV PortIPV4=19132
@@ -39,7 +36,7 @@ RUN chmod -R +x /scripts/*.sh
 RUN /scripts/SetupMinecraft.sh
 
 # Clean apt
-RUN apt-get clean && apt-get autoclean
+RUN apt-get clean && apt-get autoclean && rm -rf /var/cache/apt/*
 
 # Set entrypoint to start.sh script
 ENTRYPOINT ["/bin/bash", "/scripts/start.sh"]

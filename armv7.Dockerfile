@@ -6,7 +6,7 @@
 FROM ubuntu:21.10 AS builder
 
 # Update apt
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install qemu-user-static binfmt-support apt-utils -yqq
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install qemu-user-static binfmt-support apt-utils -yqq && rm -rf /var/cache/apt/*
 
 # Clean apt
 RUN apt-get clean && apt-get autoclean
@@ -17,7 +17,7 @@ FROM --platform=linux/arm/v7 ubuntu:21.10
 # Add QEMU
 COPY --from=builder /usr/bin/qemu-arm-static /usr/bin/
 
-# Copy ld-linux-x86-64.so.2
+# Copy bedrock_server dynamically linked dependencies
 RUN mkdir -p /lib64/
 RUN mkdir -p /lib/x86_64-linux-gnu
 COPY --from=builder /lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2
@@ -34,7 +34,7 @@ COPY --from=builder /lib/x86_64-linux-gnu/libgcc_s.so.1 /lib/x86_64-linux-gnu/li
 COPY --from=builder /lib/x86_64-linux-gnu/libc.so.6 /lib/x86_64-linux-gnu/libc.so.6
 
 # Fetch dependencies
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 apt-utils libcurl4-openssl-dev ca-certificates binfmt-support -yqq
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 apt-utils libcurl4-openssl-dev ca-certificates binfmt-support -yqq && rm -rf /var/cache/apt/*
 
 # Set port environment variables
 ENV PortIPV4=19132
@@ -58,7 +58,7 @@ RUN chmod -R +x /scripts/*.sh
 RUN /scripts/SetupMinecraft.sh
 
 # Clean apt
-RUN apt-get clean && apt-get autoclean
+RUN apt-get clean && apt-get autoclean && rm -rf /var/cache/apt/*
 
 # Set entrypoint to start.sh script
 ENTRYPOINT ["/bin/bash", "/scripts/start.sh"]
