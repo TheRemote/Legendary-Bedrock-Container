@@ -18,7 +18,7 @@ FROM --platform=linux/ppc64le ubuntu:21.10
 COPY --from=builder /usr/bin/qemu-*-static /usr/bin/
 
 # Fetch dependencies
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 apt-utils libcurl4-openssl-dev ca-certificates binfmt-support -yqq
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 apt-utils libcurl4-openssl-dev ca-certificates binfmt-support qemu-user-static -yqq
 
 # Set port environment variables
 ENV PortIPV4=19132

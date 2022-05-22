@@ -12,7 +12,7 @@ The <a href="https://github.com/TheRemote/Legendary-Java-Minecraft-Paper" target
   <li>Sets up the official Minecraft Bedrock Server (currently in alpha testing)</li>
   <li>Fully operational Minecraft Bedrock edition server in a couple of minutes</li>
   <li>Adds logging with timestamps to "logs" directory</li>
-  <li>All Docker platforms supported including Raspberry Pi</li>
+  <li>Multiarch Support - all Docker platforms supported including Raspberry Pi</li>
   <li>Automatic backups when container/server restarts</li>
   <li>Supports multiple instances -- you can run multiple Bedrock servers on the same system</li>
   <li>Updates automatically to the latest version when server is started</li>
@@ -31,15 +31,6 @@ With custom ports:
 <pre>docker run -it -v yourvolumename:/minecraft -p 12345:12345/udp -p 12345:12345 -p 12346:12346/udp -p 12346:12346 -e PortIPV4=12345 -e PortIPV6=12346 05jchambers/legendary-bedrock-container:latest</pre>
 IPV4 only:
 <pre>docker run -it -v yourvolumename:/minecraft -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
-
-<h2>ARM Platforms (Raspberry Pi, others)</h2>
-The container works fine on these platforms provided you have the following packages installed:<br>
-<ul>
-<li>binfmt-utils</li>
-<li>qemu-user-static</li>
-</ul>
-<br>
-These can be installed with: <pre>sudo apt install qemu-user-static binfmt-support</pre>
 
 <h2>Configuration / Accessing Server Files</h2>
 The server data is stored where Docker stores your volumes.  This is typically a folder on the host OS that is shared and mounted with the container.<br>
@@ -76,8 +67,7 @@ Log files with timestamps are stored in the "logs" folder.
 <ul>
   <li>May 21st 2022</li>
   <ul>
-    <li>Added qemu-user-static and binfmt-support to build dependencies</li>
-    <li>Add additional documentation for ARM platforms (qemu-user-static and binfmt-support packages required on these platforms i.e. sudo apt install qemu-user-static binfmt-support)</li>
+    <li>Added multiarch Docker images<li>
   </ul>
   <li>May 17th 2022</li>
   <ul>
