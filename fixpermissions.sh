@@ -36,8 +36,8 @@ if [[ $Automated == 1 ]]; then
 else
     sudo chown -Rv $(whoami) /minecraft
     sudo chmod -Rv 755 /scripts/*.sh
-    sudo chmod 755 /minecraft/bedrock_server
-    sudo chmod +x /minecraft/bedrock_server
+    sudo chmod 755 /minecraft/bedrock_server >/dev/null 2>&1
+    sudo chmod +x /minecraft/bedrock_server >/dev/null 2>&1
 
     NewestLog=$(find /minecraft/logs -type f -exec stat -c "%y %n" {} + | sort -r | head -n1 | cut -d " " -f 4-)
     if [ -z "$NewestLog" ]; then
