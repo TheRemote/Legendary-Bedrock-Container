@@ -6,7 +6,10 @@
 FROM ubuntu:21.10 AS builder
 
 # Update apt
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install qemu-user-static binfmt-support -yqq
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install qemu-user-static binfmt-support apt-utils -yqq
+
+# Clean apt
+RUN apt-get clean && apt-get autoclean
 
 # Use "Impish" Ubuntu version
 FROM --platform=linux/arm64/v8 ubuntu:21.10
@@ -14,11 +17,8 @@ FROM --platform=linux/arm64/v8 ubuntu:21.10
 # Add QEMU
 COPY --from=builder /usr/bin/qemu-*-static /usr/bin/
 
-# Update apt
-RUN apt-get update 
-
 # Fetch dependencies
-RUN DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 apt-utils libcurl4-openssl-dev ca-certificates qemu-user-static binfmt-support -yqq
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 apt-utils libcurl4-openssl-dev ca-certificates binfmt-support -yqq
 
 # Set port environment variables
 ENV PortIPV4=19132
