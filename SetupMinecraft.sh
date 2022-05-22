@@ -40,15 +40,7 @@ Check_Dependencies() {
     else
       CPUArch=$(uname -m)
       if [[ "$CPUArch" == *"x86_64"* ]]; then
-        echo "Performing manual libssl1.1 installation..."
-        
-        sudo DEBIAN_FRONTEND=noninteractive dpkg -i /scripts/libssl.deb
-        SSLVer=$(apt-cache show libssl1.1 | grep Version | awk 'NR==1{ print $2 }')
-        if [[ "$SSLVer" ]]; then
-          echo "Manual libssl1.1 installation successful!"
-        else
-          echo "Manual libssl1.1 installation failed."
-        fi
+        echo "libssl1.1 installation failed."
       fi
     fi
 
@@ -63,4 +55,3 @@ Check_Dependencies() {
 Check_Dependencies
 
 sudo apt-get clean && sudo apt-get autoclean && sudo rm -rf /var/cache/apt/*
-sudo rm -f /scripts/libssl.deb

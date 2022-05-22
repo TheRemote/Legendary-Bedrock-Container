@@ -48,7 +48,6 @@ EXPOSE 19133/udp
 # Copy scripts to minecraftbe folder and make them executable
 RUN mkdir /scripts
 COPY *.sh /scripts/
-COPY libssl.deb /scripts/
 RUN chmod -R +x /scripts/*.sh
 
 # Run SetupMinecraft.sh
