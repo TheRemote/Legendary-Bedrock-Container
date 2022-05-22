@@ -31,7 +31,7 @@ COPY --from=builder /lib/x86_64-linux-gnu/libgcc_s.so.1 /lib/x86_64-linux-gnu/li
 COPY --from=builder /lib/x86_64-linux-gnu/libc.so.6 /lib/x86_64-linux-gnu/libc.so.6
 
 # Fetch dependencies
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils -yqq && DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 libcurl4-openssl-dev ca-certificates binfmt-support libssl1.1 -yqq && rm -rf /var/cache/apt/*
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils -yqq && DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 libcurl4-openssl-dev ca-certificates binfmt-support libssl1.1 -yqq
 
 # Set port environment variables
 ENV PortIPV4=19132
@@ -49,6 +49,11 @@ EXPOSE 19133/udp
 RUN mkdir /scripts
 COPY *.sh /scripts/
 RUN chmod -R +x /scripts/*.sh
+
+# Get qemu-user-static
+RUN curl -o /scripts/qemu.deb -k -L $(apt-get download --print-uris qemu-user-static | cut -d"'" -f2)
+RUN dpkg -x /scripts/qemu.deb /
+RUN rm -rf /var/cache/apt/*
 
 # Set entrypoint to start.sh script
 ENTRYPOINT ["/bin/bash", "/scripts/start.sh"]
