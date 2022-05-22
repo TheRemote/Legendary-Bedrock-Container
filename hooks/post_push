@@ -5,4 +5,4 @@ curl -Lo manifest-tool.tar.gz https://github.com/estesp/manifest-tool/releases/d
 tar -xf manifest-tool.tar.gz
 chmod +x manifest-tool*
 
-./manifest-tool-linux-amd64 push from-spec multi-arch-manifest.yaml
+#./manifest-tool-linux-amd64 push from-spec multi-arch-manifest.yaml
