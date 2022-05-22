@@ -11,9 +11,6 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install qemu-user-s
 # Use "Impish" Ubuntu version
 FROM --platform=linux/arm64/v8 ubuntu:21.10
 
-# Add QEMU
-COPY --from=builder /usr/bin/qemu-aarch64-static /usr/bin/
-
 # Copy bedrock_server dynamically linked dependencies
 RUN mkdir -p /lib64/
 RUN mkdir -p /lib/x86_64-linux-gnu
@@ -31,7 +28,7 @@ COPY --from=builder /lib/x86_64-linux-gnu/libgcc_s.so.1 /lib/x86_64-linux-gnu/li
 COPY --from=builder /lib/x86_64-linux-gnu/libc.so.6 /lib/x86_64-linux-gnu/libc.so.6
 
 # Fetch dependencies
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 apt-utils libcurl4-openssl-dev ca-certificates binfmt-support -yqq  && rm -rf /var/cache/apt/*
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils -yqq && DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 libcurl4-openssl-dev ca-certificates binfmt-support -yqq && rm -rf /var/cache/apt/*
 
 # Set port environment variables
 ENV PortIPV4=19132
@@ -49,9 +46,6 @@ EXPOSE 19133/udp
 RUN mkdir /scripts
 COPY *.sh /scripts/
 RUN chmod -R +x /scripts/*.sh
-
-# Run SetupMinecraft.sh
-RUN /scripts/SetupMinecraft.sh
 
 # Set entrypoint to start.sh script
 ENTRYPOINT ["/bin/bash", "/scripts/start.sh"]

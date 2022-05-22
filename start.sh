@@ -130,6 +130,6 @@ BASH_CMD="LD_LIBRARY_PATH=/minecraft /minecraft/bedrock_server"
 if command -v gawk &> /dev/null; then
   BASH_CMD+=$' | gawk \'{ print strftime(\"[%Y-%m-%d %H:%M:%S]\"), $0 }\''
 else
-  echo "gawk application was not found -- timestamps will not be available in the logs.  Please delete SetupMinecraft.sh and run the script the new recommended way!"
+  echo "gawk application was not found -- timestamps will not be available in the logs"
 fi
 screen -L -Logfile /minecraft/logs/minecraft.$(date +%Y.%m.%d.%H.%M.%S).log -mS minecraftbe /bin/bash -c "${BASH_CMD}"
