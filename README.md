@@ -68,6 +68,7 @@ Log files with timestamps are stored in the "logs" folder.
   <li>May 21st 2022</li>
   <ul>
     <li>Added multiarch Docker images<li>
+    <li>Reduced image sizes<li>
   </ul>
   <li>May 17th 2022</li>
   <ul>

@@ -54,8 +54,5 @@ RUN chmod -R +x /scripts/*.sh
 # Run SetupMinecraft.sh
 RUN /scripts/SetupMinecraft.sh
 
-# Clean apt
-RUN apt-get clean && apt-get autoclean && rm -rf /var/cache/apt/*
-
 # Set entrypoint to start.sh script
 ENTRYPOINT ["/bin/bash", "/scripts/start.sh"]

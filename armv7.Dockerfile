@@ -8,9 +8,6 @@ FROM ubuntu:21.10 AS builder
 # Update apt
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install qemu-user-static binfmt-support apt-utils -yqq && rm -rf /var/cache/apt/*
 
-# Clean apt
-RUN apt-get clean && apt-get autoclean
-
 # Use "Impish" Ubuntu version
 FROM --platform=linux/arm/v7 ubuntu:21.10
 
@@ -56,9 +53,6 @@ RUN chmod -R +x /scripts/*.sh
 
 # Run SetupMinecraft.sh
 RUN /scripts/SetupMinecraft.sh
-
-# Clean apt
-RUN apt-get clean && apt-get autoclean && rm -rf /var/cache/apt/*
 
 # Set entrypoint to start.sh script
 ENTRYPOINT ["/bin/bash", "/scripts/start.sh"]
