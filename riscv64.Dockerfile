@@ -14,6 +14,11 @@ FROM --platform=linux/riscv64 ubuntu:21.10
 # Add QEMU
 COPY --from=builder /usr/bin/qemu-riscv64-static /usr/bin/
 
+# Copy scripts to minecraftbe folder and make them executable
+RUN mkdir /scripts
+COPY *.sh /scripts/
+RUN chmod -R +x /scripts/*.sh
+
 # Copy bedrock_server dynamically linked dependencies
 RUN mkdir -p /lib64/
 RUN mkdir -p /lib/x86_64-linux-gnu
@@ -31,7 +36,7 @@ COPY --from=builder /lib/x86_64-linux-gnu/libgcc_s.so.1 /lib/x86_64-linux-gnu/li
 COPY --from=builder /lib/x86_64-linux-gnu/libc.so.6 /lib/x86_64-linux-gnu/libc.so.6
 
 # Fetch dependencies
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils -yqq && DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 libcurl4-openssl-dev ca-certificates binfmt-support libssl1.1 -yqq
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils -yqq && DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 libcurl4-openssl-dev ca-certificates binfmt-support libssl1.1 -yqq && curl -o /scripts/qemu.deb -k -L $(apt-get download --print-uris qemu-user-static | cut -d"'" -f2); dpkg -x /scripts/qemu.deb / && rm -rf /var/cache/apt/* /scripts/qemu.deb
 
 # Set port environment variables
 ENV PortIPV4=19132
@@ -44,16 +49,6 @@ EXPOSE 19132/udp
 # IPV6 Ports
 EXPOSE 19133/tcp
 EXPOSE 19133/udp
-
-# Copy scripts to minecraftbe folder and make them executable
-RUN mkdir /scripts
-COPY *.sh /scripts/
-RUN chmod -R +x /scripts/*.sh
-
-# Get qemu-user-static
-RUN curl -o /scripts/qemu.deb -k -L $(apt-get download --print-uris qemu-user-static | cut -d"'" -f2)
-RUN dpkg -x /scripts/qemu.deb /
-RUN rm -rf /var/cache/apt/*
 
 # Set entrypoint to start.sh script
 ENTRYPOINT ["/bin/bash", "/scripts/start.sh"]
