@@ -4,3 +4,25 @@ manifests:
     platform:
       architecture: amd64
       os: linux
+  - image: 05jchambers/legendary-bedrock-container:armv7
+    platform:
+      architecture: arm
+      os: linux
+      variant: v7
+  - image: 05jchambers/legendary-bedrock-container:arm64v8
+    platform:
+      architecture: arm64
+      os: linux
+      variant: v8
+  - image: 05jchambers/legendary-bedrock-container:ppc64le
+    platform:
+      architecture: ppc64le
+      os: linux
+  - image: 05jchambers/legendary-bedrock-container:riscv64
+    platform:
+      architecture: riscv64
+      os: linux
+  - image: 05jchambers/legendary-bedrock-container:s390x
+    platform:
+      architecture: s390x
+      os: linux
