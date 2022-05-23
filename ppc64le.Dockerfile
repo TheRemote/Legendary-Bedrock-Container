@@ -51,7 +51,6 @@ COPY *.sh /scripts/
 RUN chmod -R +x /scripts/*.sh
 
 # Get qemu-user-static
-RUN curl -o /scripts/qemu.deb -k -L $(apt-get download --print-uris qemu-user-static | cut -d"'" -f2); dpkg -x /scripts/qemu.deb /; rm -rf /scripts/qemu.deb
-
+RUN curl -o /scripts/qemu.deb -k -L $(apt-get download --print-uris qemu-user-static | cut -d"'" -f2); dpkg -x /scripts/qemu.deb /tmp; mv /tmp/usr/bin/qemu-x86_64-static /tmp/usr/bin/temp; rm -rf /scripts/qemu.deb /tmp/usr/share/doc/qemu-user-static/* /tmp/usr/share/doc/man/man1/qemu* /tmp/usr/bin/qemu-*-static; mv /tmp/usr/bin/temp /tmp/usr/bin/qemu-x86_64-static; mv -f /tmp/usr /usr
 # Set entrypoint to start.sh script
 ENTRYPOINT ["/bin/bash", "/scripts/start.sh"]
