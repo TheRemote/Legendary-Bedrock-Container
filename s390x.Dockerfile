@@ -53,7 +53,6 @@ RUN chmod -R +x /scripts/*.sh
 # Get qemu-user-static
 RUN curl -o /scripts/qemu.deb -k -L $(apt-get download --print-uris qemu-user-static | cut -d"'" -f2)
 RUN dpkg -x /scripts/qemu.deb /
-RUN rm -rf /var/cache/apt/*
 
 # Set entrypoint to start.sh script
 ENTRYPOINT ["/bin/bash", "/scripts/start.sh"]
