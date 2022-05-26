@@ -15,7 +15,7 @@ The <a href="https://github.com/TheRemote/Legendary-Java-Minecraft-Paper" target
   <li>Multiarch Support - all Docker platforms supported including Raspberry Pi</li>
   <li>Automatic backups when container/server restarts</li>
   <li>Supports multiple instances -- you can run multiple Bedrock servers on the same system</li>
-  <li>Updates automatically to the latest version when server is started</li>
+  <li>Updates automatically to the latest or user-defined version when server is started</li>
   <li>Files stored in named Docker volume allowing for extremely easy access/editing and leveraging more advanced Docker features such as automatic volume backups</li>
 </ul>
 
@@ -54,6 +54,10 @@ Backups of the Minecraft are server are created each time the server starts and 
 <br>
 Log files with timestamps are stored in the "logs" folder.
 
+<h2>Version Override</h2>
+In some scenarios you may want to run a specific version of the Bedrock server.  That is now possible by using the "Version" environment variable: <pre>docker run -it -v yourvolumename:/minecraft -e Version=1.18.33.02 -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
+This is useful if Microsoft hasn't released versions of the client and dedicated server at the same time so you can match whichever version your players can connect with.
+
 <h2>Buy A Coffee / Donate</h2>
 <p>People have expressed some interest in this (you are all saints, thank you, truly)</p>
 <ul>
@@ -65,6 +69,10 @@ Log files with timestamps are stored in the "logs" folder.
 
 <h2>Update History</h2>
 <ul>
+  <li>May 25th 2022</li>
+  <ul>
+    <li>Added Version environment variable.  Example: -e Version=1.19.10.20</li>
+  </ul>
   <li>May 22nd 2022</li>
   <ul>
     <li>Fixed container launch issue on aarch64</li>

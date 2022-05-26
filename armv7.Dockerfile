@@ -37,6 +37,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteract
 ENV PortIPV4=19132
 ENV PortIPV6=19133
 
+# Version environment variable (must exist on Microsoft's servers)
+ENV Version=
+
 # IPV4 Ports
 EXPOSE 19132/tcp
 EXPOSE 19132/udp

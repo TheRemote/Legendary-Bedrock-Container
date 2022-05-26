@@ -98,25 +98,46 @@ else
     # Download server index.html to check latest version
 
     curl -H "Accept-Encoding: identity" -H "Accept-Language: en" -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.$RandNum.212 Safari/537.36" -o /minecraft/downloads/version.html https://www.minecraft.net/en-us/download/server/bedrock
-    DownloadURL=$(grep -o 'https://minecraft.azureedge.net/bin-linux/[^"]*' /minecraft/downloads/version.html)
+    LatestURL=$(grep -o 'https://minecraft.azureedge.net/bin-linux/[^"]*' downloads/version.html)
 
-    DownloadFile=$(echo "$DownloadURL" | sed 's#.*/##')
+    LatestFile=$(echo "$LatestURL" | sed 's#.*/##')
 
-    # Download latest version of Minecraft Bedrock dedicated server if a new one is available
-    if [ -f "/minecraft/downloads/$DownloadFile" ]
-    then
-        echo "Minecraft Bedrock server is up to date..."
+    echo "Latest version online is $LatestFile"
+    if [ -n "$Version" ]; then
+        echo "Override version, using version specified: $Version"
+        PinFile=$(echo "bedrock-server-$Version.zip")
+    fi
+
+    if [ -e version_installed.txt ]; then
+        InstalledFile=$(cat version_installed.txt)
+        echo "Current install is: $InstalledFile"
+    fi
+    
+    if [[ "$PinFile" == *"zip" ]] && [[ "$InstalledFile" == "$PinFile" ]]; then
+        echo "Requested version $PinFile is already installed"
+    elif [ ! -z "$PinFile" ]; then
+        echo "Installing $PinFile"
+        DownloadFile=$PinFile
+        DownloadURL="https://minecraft.azureedge.net/bin-linux/$PinFile"
+    elif [[ "$InstalledFile" == "$LatestFile" ]]; then
+        echo "Latest version $LatestFile is already installed"
     else
-        echo "New version $DownloadFile is available.  Updating Minecraft Bedrock server ..."
+        echo "Installing $LatestFile"
+        DownloadFile=$LatestFile
+        DownloadURL=$LatestURL
+    fi
+
+    # Download version of Minecraft Bedrock dedicated server if it's not already local
+    if [ ! -f "downloads/$DownloadFile" ]; then
         curl -H "Accept-Encoding: identity" -H "Accept-Language: en" -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.$RandNum.212 Safari/537.36" -o "downloads/$DownloadFile" "$DownloadURL"
-        if [ -e server.properties ]; then
-          unzip -o "downloads/$DownloadFile" -x "*server.properties*" "*permissions.json*" "*whitelist.json*" "*valid_known_packs.json*" "*allowlist.json*"
-        else
-          unzip -o "downloads/$DownloadFile"
-        fi
-        
-        # Take ownership of server files and set correct permissions
-        Permissions=$(sudo bash /scripts/fixpermissions.sh -a)
+    fi
+
+    # Install version of Minecraft requested
+    if [ ! -z "$DownloadFile" ]; then
+        unzip -o "downloads/$DownloadFile" -x "*server.properties*" "*permissions.json*" "*whitelist.json*" "*valid_known_packs.json*" "*allowlist.json*"
+        Permissions=$(chmod u+x bedrock_server >/dev/null)
+    else
+        echo "$DownloadFile" >version_installed.txt
     fi
 fi
 
