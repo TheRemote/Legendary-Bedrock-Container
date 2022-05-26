@@ -39,8 +39,8 @@ You can find your exact path by typing: <pre>docker volume inspect yourvolumenam
         "CreatedAt": "2022-05-09T21:08:34-06:00",
         "Driver": "local",
         "Labels": {},
-        "Mountpoint": "/var/lib/docker/volumes/minecraftbe/_data",
-        "Name": "minecraftbe",
+        "Mountpoint": "/var/lib/docker/volumes/yourvolumename/_data",
+        "Name": "yourvolumename",
         "Options": {},
         "Scope": "local"
     }</pre>
