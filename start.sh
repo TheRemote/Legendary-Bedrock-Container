@@ -136,7 +136,6 @@ else
     if [ ! -z "$DownloadFile" ]; then
         unzip -o "downloads/$DownloadFile" -x "*server.properties*" "*permissions.json*" "*whitelist.json*" "*valid_known_packs.json*" "*allowlist.json*"
         Permissions=$(chmod u+x bedrock_server >/dev/null)
-    else
         echo "$DownloadFile" >version_installed.txt
     fi
 fi
