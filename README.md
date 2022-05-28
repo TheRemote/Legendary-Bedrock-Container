@@ -69,6 +69,10 @@ This is useful if Microsoft hasn't released versions of the client and dedicated
 
 <h2>Update History</h2>
 <ul>
+  <li>May 27th 2022</li>
+  <ul>
+    <li>Cleaned up qemu-user-static installation</li>
+  </ul>
   <li>May 26th 2022</li>
   <ul>
     <li>Fixed issue with new Version environment variable that could lead to it not working</li>
