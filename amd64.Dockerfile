@@ -33,6 +33,7 @@ EXPOSE 19133/udp
 RUN mkdir /scripts
 COPY *.sh /scripts/
 RUN chmod -R +x /scripts/*.sh
+COPY server.properties /scripts/
 
 # Set entrypoint to start.sh script
 ENTRYPOINT ["/bin/bash", "/scripts/start.sh"]

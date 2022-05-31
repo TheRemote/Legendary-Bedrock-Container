@@ -151,6 +151,10 @@ else
     fi
 fi
 
+if [ ! -e /minecraft/server.properties ]; then
+    cp -rf /scripts/server.properties /minecraft/server.properties
+fi
+
 # Change ports in server.properties
 sed -i "/server-port=/c\server-port=$PortIPV4" /minecraft/server.properties
 sed -i "/server-portv6=/c\server-portv6=$PortIPV6" /minecraft/server.properties
