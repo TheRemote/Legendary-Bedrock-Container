@@ -103,8 +103,8 @@ else
 
     echo "Latest version online is $LatestFile"
     if [ -n "$Version" ]; then
-        echo "Override version, using version specified: $Version"
-        PinFile=$(echo "bedrock-server-$Version.zip")
+        PinFile="bedrock-server-$Version.zip"
+        echo "Override version, using version specified: $Version as $PinFile"
     fi
 
     if [ -e version_installed.txt ]; then
@@ -127,8 +127,8 @@ else
         # Install version of Minecraft requested
         if [ ! -z "$DownloadFile" ]; then
             unzip -o "downloads/$DownloadFile" -x "*server.properties*" "*permissions.json*" "*whitelist.json*" "*valid_known_packs.json*" "*allowlist.json*"
-            Permissions=$(chmod u+x bedrock_server >/dev/null)
-            echo "$DownloadFile" >version_installed.txt
+            Permissions=$(chmod u+x /minecraft/bedrock_server >/dev/null)
+            echo "$DownloadFile" >/minecraft/version_installed.txt
         fi
     elif [[ "$InstalledFile" == "$LatestFile" ]]; then
         echo "Latest version $LatestFile is already installed"
@@ -145,8 +145,8 @@ else
         # Install version of Minecraft requested
         if [ ! -z "$DownloadFile" ]; then
             unzip -o "downloads/$DownloadFile" -x "*server.properties*" "*permissions.json*" "*whitelist.json*" "*valid_known_packs.json*" "*allowlist.json*"
-            Permissions=$(chmod u+x bedrock_server >/dev/null)
-            echo "$DownloadFile" >version_installed.txt
+            Permissions=$(chmod u+x /minecraft/bedrock_server >/dev/null)
+            echo "$DownloadFile" > /minecraft/version_installed.txt
         fi
     fi
 fi

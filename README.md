@@ -69,6 +69,10 @@ This is useful if Microsoft hasn't released versions of the client and dedicated
 
 <h2>Update History</h2>
 <ul>
+  <li>Jun 2nd 2022</li>
+  <ul>
+    <li>Added a couple of path safety checks and more information about what paths are being used with Version environment variable</li>
+  </ul>
   <li>May 31st 2022</li>
   <ul>
     <li>Added default server.properties file to prevent rare container launch issue</li>
