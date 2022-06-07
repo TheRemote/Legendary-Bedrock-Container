@@ -69,6 +69,10 @@ This is useful if Microsoft hasn't released versions of the client and dedicated
 
 <h2>Update History</h2>
 <ul>
+  <li>Jun 7th 2022</li>
+  <ul>
+    <li>Add docker-compose.yml template for use with docker-compose</li>
+  </ul>
   <li>Jun 2nd 2022</li>
   <ul>
     <li>Added a couple of path safety checks and more information about what paths are being used with Version environment variable</li>

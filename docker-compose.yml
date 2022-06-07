@@ -1,0 +1,23 @@
+# Minecraft Bedrock Server Docker Container
+# Author: James A. Chambers - https://jamesachambers.com/legendary-minecraft-bedrock-container/
+# GitHub Repository: https://github.com/TheRemote/Legendary-Bedrock-Container
+
+# To run multiple servers change the volume name under both "volumes" sections and select different ports
+version: "3.5"
+services:
+  minecraftbe:
+    image: 05jchambers/legendary-bedrock-container:latest
+    restart: "unless-stopped"
+    ports:
+      - 19133:19133
+      - 19133:19133/udp
+      - 19132:19132
+      - 19132:19132/udp
+    volumes:
+      - minecraftbe:/minecraft
+    stdin_open: true # docker run -i
+    tty: true # docker run -t
+    entrypoint: [ "/bin/bash", "/scripts/start.sh" ]
+volumes:
+  minecraftbe:
+    driver: local
