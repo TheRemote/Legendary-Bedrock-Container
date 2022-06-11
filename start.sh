@@ -155,6 +155,14 @@ if [ ! -e /minecraft/server.properties ]; then
     cp -rf /scripts/server.properties /minecraft/server.properties
 fi
 
+if [ ! -e /minecraft/allowlist.json ]; then
+    cp -rf /scripts/allowlist.json /minecraft/allowlist.json
+fi
+
+if [ ! -e /minecraft/permissions.json ]; then
+    cp -rf /scripts/permissions.json /minecraft/permissions.json
+fi
+
 # Change ports in server.properties
 sed -i "/server-port=/c\server-port=$PortIPV4" /minecraft/server.properties
 sed -i "/server-portv6=/c\server-portv6=$PortIPV6" /minecraft/server.properties

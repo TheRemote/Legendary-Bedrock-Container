@@ -34,6 +34,8 @@ RUN mkdir /scripts
 COPY *.sh /scripts/
 RUN chmod -R +x /scripts/*.sh
 COPY server.properties /scripts/
+COPY allowlist.json /scripts/
+COPY permissions.json /scripts/
 
 # Set entrypoint to start.sh script
 ENTRYPOINT ["/bin/bash", "/scripts/start.sh"]

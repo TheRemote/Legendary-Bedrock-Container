@@ -69,6 +69,10 @@ This is useful if Microsoft hasn't released versions of the client and dedicated
 
 <h2>Update History</h2>
 <ul>
+  <li>Jun 11th 2022</li>
+  <ul>
+    <li>Added allowlist.json and permissions.json default template files to prevent crashes when they are missing</li>
+  </ul>
   <li>Jun 7th 2022</li>
   <ul>
     <li>Add docker-compose.yml template for use with docker-compose</li>
