@@ -69,6 +69,10 @@ This is useful if Microsoft hasn't released versions of the client and dedicated
 
 <h2>Update History</h2>
 <ul>
+  <li>July 13th 2022</li>
+  <ul>
+    <li>Update base Ubuntu image</li>
+  </ul>
   <li>June 27th 2022</li>
   <ul>
     <li>Update base Ubuntu image</li>
