@@ -16,7 +16,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install qemu-user-s
 FROM --platform=linux/arm/v7 ubuntu:latest
 
 # Add QEMU
-COPY --from=builder /usr/bin/qemu-aarch64-static /usr/bin/
+COPY --from=builder /usr/bin/qemu-arm-static /usr/bin/
 
 # Copy bedrock_server dynamically linked dependencies
 RUN mkdir -p /lib64/
