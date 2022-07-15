@@ -5,15 +5,8 @@
 # Use latest Ubuntu version for builder
 FROM ubuntu:latest AS builder
 
-# Update apt
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils libcurl4 libssl-dev -yqq && rm -rf /var/cache/apt/*
-
 # Use latest Ubuntu version
 FROM --platform=linux/amd64 ubuntu:latest
-
-# Install libssl 1.1
-COPY libssl1-1.deb /scripts/
-RUN dpkg -x /scripts/libssl1-1.deb /tmp/ext; rm -rf /scripts/libssl1-1.deb; cp -Rf /tmp/ext/usr/lib/x86_64-linux-gnu/* /usr/lib/x86_64-linux-gnu/
 
 # Fetch dependencies
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils -yqq && DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 libcurl4-openssl-dev ca-certificates binfmt-support libssl3 -yqq && rm -rf /var/cache/apt/*
@@ -40,6 +33,9 @@ RUN chmod -R +x /scripts/*.sh
 COPY server.properties /scripts/
 COPY allowlist.json /scripts/
 COPY permissions.json /scripts/
+# Install libssl 1.1
+COPY libssl1-1.deb /scripts/
+RUN dpkg -x /scripts/libssl1-1.deb /tmp/ext; rm -rf /scripts/libssl1-1.deb; cp -Rf /tmp/ext/usr/lib/x86_64-linux-gnu/* /usr/lib/x86_64-linux-gnu/
 
 # Set entrypoint to start.sh script
 ENTRYPOINT ["/bin/bash", "/scripts/start.sh"]
