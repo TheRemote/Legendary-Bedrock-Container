@@ -69,6 +69,11 @@ This is useful if Microsoft hasn't released versions of the client and dedicated
 
 <h2>Update History</h2>
 <ul>
+  <li>July 14th 2022</li>
+  <ul>
+    <li>Added over a dozen new very recently introduced dependencies -- update container with docker pull 05jchambers/legendary-bedrock-container:latest to get new dependencies</li>
+    <li>Updated from Ubuntu "Impish" to Ubuntu "Latest" base image as libssl3 is now linked in the bedrock_server dependencies</li>
+  </ul>
   <li>July 13th 2022</li>
   <ul>
     <li>Update base Ubuntu image</li>

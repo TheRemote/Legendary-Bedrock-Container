@@ -2,17 +2,22 @@
 # Author: James A. Chambers - https://jamesachambers.com/legendary-minecraft-bedrock-container/
 # GitHub Repository: https://github.com/TheRemote/Legendary-Bedrock-Container
 
-# Use "Impish" Ubuntu version for builder
-FROM ubuntu:21.10 AS builder
+# Use latest Ubuntu version for builder
+FROM ubuntu:latest AS builder
+
+# Install libssl 1.1
+COPY libssl1-1.deb /scripts/
+RUN dpkg -i /scripts/libssl1-1.deb
+RUN rm -f /scripts/libssl1-1.deb
 
 # Update apt
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils -yqq && rm -rf /var/cache/apt/*
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils libcurl4 -yqq && DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -yqq && rm -rf /var/cache/apt/*
 
 # Use "Impish" Ubuntu version
-FROM --platform=linux/amd64 ubuntu:21.10
+FROM --platform=linux/amd64 ubuntu:latest
 
 # Fetch dependencies
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils -yqq && DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 libcurl4-openssl-dev ca-certificates binfmt-support libssl1.1 -yqq && rm -rf /var/cache/apt/*
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils -yqq && DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 libcurl4-openssl-dev ca-certificates binfmt-support libssl1.1 -yqq && DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -yqq && rm -rf /var/cache/apt/*
 
 # Set port environment variables
 ENV PortIPV4=19132
