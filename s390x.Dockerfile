@@ -7,7 +7,7 @@ FROM ubuntu:latest AS builder
 
 # Install libssl 1.1
 COPY libssl1-1.deb /scripts/
-RUN dpkg -x /scripts/libssl1-1.deb /tmp/ext; rm -rf /scripts/libssl1-1.deb; cp -Rf /tmp/ext/usr/lib* /usr/lib
+RUN dpkg -x /scripts/libssl1-1.deb /tmp/ext; rm -rf /scripts/libssl1-1.deb; cp -Rf /tmp/ext/usr/lib/x86_64-linux-gnu/* /usr/lib/x86_64-linux-gnu/
 
 # Update apt
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install qemu-user-static binfmt-support apt-utils libcurl4 libssl-dev -yqq && rm -rf /var/cache/apt/*
