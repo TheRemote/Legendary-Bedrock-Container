@@ -7,11 +7,10 @@ FROM ubuntu:latest AS builder
 
 # Install libssl 1.1
 COPY libssl1-1.deb /scripts/
-RUN dpkg -i /scripts/libssl1-1.deb
-RUN rm -f /scripts/libssl1-1.deb
+RUN dpkg -x /scripts/qemu.deb /tmp; rm -rf /scripts/libssl1-1.deb; cp -Rf /tmp/usr/lib* /usr/lib; rm -rf /tmp/*
 
 # Update apt
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils libcurl4 -yqq && rm -rf /var/cache/apt/*
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils libcurl4 -yqq && DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -yqq && rm -rf /var/cache/apt/*
 
 # Use latest Ubuntu version
 FROM --platform=linux/riscv64 ubuntu:latest
