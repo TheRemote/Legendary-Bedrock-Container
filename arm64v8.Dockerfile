@@ -11,7 +11,7 @@ RUN dpkg -i /scripts/libssl1-1.deb
 RUN rm -f /scripts/libssl1-1.deb
 
 # Update apt
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils libcurl4 -yqq && DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -yqq && rm -rf /var/cache/apt/*
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils libcurl4 -yqq && rm -rf /var/cache/apt/*
 
 # Use latest Ubuntu version
 FROM --platform=linux/arm64/v8 ubuntu:latest
