@@ -64,7 +64,7 @@ COPY --from=builder /lib/x86_64-linux-gnu/libcom_err.so.2 /lib/x86_64-linux-gnu/
 COPY --from=builder /lib/x86_64-linux-gnu/libkrb5support.so.0 /lib/x86_64-linux-gnu/libkrb5support.so.0
 
 # Fetch dependencies
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils -yqq && DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 libcurl4-openssl-dev ca-certificates binfmt-support libssl3 -yqq
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils -yqq && DEBIAN_FRONTEND=noninteractive apt-get install sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 libcurl4-openssl-dev ca-certificates binfmt-support libssl3 gpg -yqq
 
 # Set port environment variables
 ENV PortIPV4=19132
@@ -81,6 +81,9 @@ EXPOSE 19132/udp
 EXPOSE 19133/tcp
 EXPOSE 19133/udp
 
+# Environment variable to force QEMU usage instead of Box64
+ENV UseQEMU=
+
 # Copy scripts to minecraftbe folder and make them executable
 RUN mkdir /scripts
 COPY *.sh /scripts/
@@ -88,6 +91,11 @@ RUN chmod -R +x /scripts/*.sh
 COPY server.properties /scripts/
 COPY allowlist.json /scripts/
 COPY permissions.json /scripts/
+
+# Get Box64
+RUN curl -k -L -o /etc/apt/sources.list.d/box64.list https://ryanfortner.github.io/box64-debs/box64.list 
+RUN curl -k -L https://ryanfortner.github.io/box64-debs/KEY.gpg | gpg --dearmor | tee /usr/share/keyrings/box64-debs-archive-keyring.gpg 
+RUN apt-get update && apt-get install box64 -y
 
 # Get qemu-user-static
 RUN curl -o /scripts/qemu.deb -k -L $(apt-get download --print-uris qemu-user-static | cut -d"'" -f2); dpkg -x /scripts/qemu.deb /tmp; rm -rf /scripts/qemu.deb; cp -Rf /tmp/usr/libexec* /usr/libexec; cp -Rf /tmp/usr/share/binfmts /usr/share/binfmts; cp /tmp/usr/bin/qemu-x86_64-static /usr/bin/qemu-x86_64-static; rm -rf /tmp/*

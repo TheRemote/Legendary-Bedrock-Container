@@ -8,19 +8,19 @@ echo "Latest version always at https://github.com/TheRemote/Legendary-Bedrock-Co
 echo "Don't forget to set up port forwarding on your router!  The default port is 19132"
 
 if [ ! -d '/minecraft' ]; then
-  echo "ERROR:  A named volume was not specified for the minecraft server data.  Please create one with: docker volume create yourvolumename"
-  echo "Please pass the new volume to docker like this:  docker run -it -v yourvolumename:/minecraft"
-  exit 1
+    echo "ERROR:  A named volume was not specified for the minecraft server data.  Please create one with: docker volume create yourvolumename"
+    echo "Please pass the new volume to docker like this:  docker run -it -v yourvolumename:/minecraft"
+    exit 1
 fi
 
 # Randomizer for user agent
 RandNum=$(echo $((1 + $RANDOM % 5000)))
 
 if [ -z "$PortIPV4" ]; then
-  PortIPV4="19132"
+    PortIPV4="19132"
 fi
 if [ -z "$PortIPV6" ]; then
-  PortIPV6="19133"
+    PortIPV6="19133"
 fi
 echo "Ports used - IPV4: $PortIPV4 - IPV6: $PortIPV6"
 
@@ -53,14 +53,14 @@ else
     DefaultRoute=$(route -n | awk '$4 == "UG" {print $2}')
 fi
 while [ -z "$DefaultRoute" ]; do
-    echo "Network interface not up, will try again in 1 second";
-    sleep 1;
+    echo "Network interface not up, will try again in 1 second"
+    sleep 1
     if [ -e '/sbin/route' ]; then
         DefaultRoute=$(/sbin/route -n | awk '$4 == "UG" {print $2}')
     else
         DefaultRoute=$(route -n | awk '$4 == "UG" {print $2}')
     fi
-    NetworkChecks=$((NetworkChecks+1))
+    NetworkChecks=$((NetworkChecks + 1))
     if [ $NetworkChecks -gt 20 ]; then
         echo "Waiting for network interface to come up timed out - starting server without network connection ..."
         break
@@ -73,7 +73,7 @@ Permissions=$(sudo bash /scripts/fixpermissions.sh -a)
 # Create backup
 if [ -d "worlds" ]; then
     echo "Backing up server (to minecraftbe/backups folder)"
-    if [ -n "`which pigz`" ]; then
+    if [ -n "$(which pigz)" ]; then
         echo "Backing up server (multiple cores) to minecraftbe/backups folder"
         tar -I pigz -pvcf backups/$(date +%Y.%m.%d.%H.%M.%S).tar.gz worlds
     else
@@ -84,7 +84,11 @@ fi
 
 # Rotate backups -- keep most recent 10
 if [ -e /minecraft/backups ]; then
-  Rotate=$(pushd /minecraft/backups; ls -1tr | head -n -10 | xargs -d '\n' rm -f --; popd)
+    Rotate=$(
+        pushd /minecraft/backups
+        ls -1tr | head -n -10 | xargs -d '\n' rm -f --
+        popd
+    )
 fi
 
 # Retrieve latest version of Minecraft Bedrock dedicated server
@@ -111,7 +115,7 @@ else
         InstalledFile=$(cat version_installed.txt)
         echo "Current install is: $InstalledFile"
     fi
-    
+
     if [[ "$PinFile" == *"zip" ]] && [[ "$InstalledFile" == "$PinFile" ]]; then
         echo "Requested version $PinFile is already installed"
     elif [ ! -z "$PinFile" ]; then
@@ -146,7 +150,7 @@ else
         if [ ! -z "$DownloadFile" ]; then
             unzip -o "downloads/$DownloadFile" -x "*server.properties*" "*permissions.json*" "*whitelist.json*" "*valid_known_packs.json*" "*allowlist.json*"
             Permissions=$(chmod u+x /minecraft/bedrock_server >/dev/null)
-            echo "$DownloadFile" > /minecraft/version_installed.txt
+            echo "$DownloadFile" >/minecraft/version_installed.txt
         fi
     fi
 fi
@@ -172,12 +176,18 @@ echo "Starting Minecraft server..."
 CPUArch=$(uname -m)
 if [[ "$CPUArch" == *"x86_64"* ]]; then
     BASH_CMD="./bedrock_server"
+elif [[ "$CPUArch" == *"aarch64"* ]]; then
+    if [ -z "$UseQEMU" ]; then
+        BASH_CMD="box64 bedrock_server"
+    else
+        BASH_CMD="qemu-x86_64-static bedrock_server"
+    fi
 else
     BASH_CMD="qemu-x86_64-static bedrock_server"
 fi
-if command -v gawk &> /dev/null; then
-  BASH_CMD+=$' | gawk \'{ print strftime(\"[%Y-%m-%d %H:%M:%S]\"), $0 }\''
+if command -v gawk &>/dev/null; then
+    BASH_CMD+=$' | gawk \'{ print strftime(\"[%Y-%m-%d %H:%M:%S]\"), $0 }\''
 else
-  echo "gawk application was not found -- timestamps will not be available in the logs"
+    echo "gawk application was not found -- timestamps will not be available in the logs"
 fi
 screen -L -Logfile /minecraft/logs/minecraft.$(date +%Y.%m.%d.%H.%M.%S).log -mS minecraftbe /bin/bash -c "${BASH_CMD}"
