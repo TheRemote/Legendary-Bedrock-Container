@@ -17,7 +17,7 @@ The <a href="https://github.com/TheRemote/Legendary-Java-Minecraft-Paper" target
   <li>Supports multiple instances -- you can run multiple Bedrock servers on the same system</li>
   <li>Updates automatically to the latest or user-defined version when server is started</li>
   <li>Files stored in named Docker volume allowing for extremely easy access/editing and leveraging more advanced Docker features such as automatic volume backups</li>
-  <li>*NEW* Uses Box64 for aarch64 (ARM 64 bit) for improved emulation speed due to box64's use of native syscalls where possible</li>
+  <li><strong>*NEW*</strong> Uses Box64 for aarch64 (ARM 64 bit) for improved emulation speed due to box64's use of native syscalls where possible</li>
 </ul>
 
 <h2>Usage</h2>
@@ -58,6 +58,10 @@ Log files with timestamps are stored in the "logs" folder.
 <h2>Version Override</h2>
 In some scenarios you may want to run a specific version of the Bedrock server.  That is now possible by using the "Version" environment variable: <pre>docker run -it -v yourvolumename:/minecraft -e Version=1.18.33.02 -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
 This is useful if Microsoft hasn't released versions of the client and dedicated server at the same time so you can match whichever version your players can connect with.
+
+<h2>Disable Box64 (aarch64 only)</h2>
+Box64 speeds up performance on 64-bit ARM platforms by translating some calls that are normally emulated as native system calls (much faster).  If you are having trouble running the dedicated server with Box64 support you can tell it to use QEMU instead with: <pre>-e UseQEMU=Y</pre>
+For example: <pre>docker run -it -v yourvolumename:/minecraft -e UseQEMU=Y -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
 
 <h2>Buy A Coffee / Donate</h2>
 <p>People have expressed some interest in this (you are all saints, thank you, truly)</p>
