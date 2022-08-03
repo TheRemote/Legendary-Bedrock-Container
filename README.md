@@ -72,7 +72,9 @@ This is useful if Microsoft hasn't released versions of the client and dedicated
 <ul>
   <li>August 2nd 2022</li>
   <ul>
-    <li>Added experimental Box64 support for aarch64 -- speeds things up for ARM users</li>
+    <li>Added experimental Box64 support for aarch64 -- speeds things up for 64-bit ARM users</li>
+    <li>You must be running a 64-bit OS to benefit from the Box64 increased speeds (both Ubuntu and Raspberry Pi OS have 64-bit versions)</li>
+    <li>An easy way to check and make sure you are running 64 bit is to use <pre>uname -m</pre> which will return "aarch64" if you are on 64-bit ARM</li>
     <li>If you are having trouble with Box64 (file an issue / leave me a comment on my site so I know about it) you can disable it by adding <pre>-e UseQEMU=Y</pre> to the command line to tell it to use QEMU instead of Box64</li>
   </ul>
   <li>July 14th 2022</li>
