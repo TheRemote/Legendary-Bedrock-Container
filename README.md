@@ -1,4 +1,6 @@
 # Legendary Bedrock Container - Minecraft Bedrock Dedicated Server for Docker
+<img src="https://jamesachambers.com/wp-content/uploads/2022/05/Minecraft-Docker-Bedrock-1024x576.webp" alt="Legendary Minecraft Bedrock Container">
+
 This is the Docker containerized version of my <a href="https://github.com/TheRemote/MinecraftBedrockServer" target="_blank" rel="noopener">Minecraft Bedrock Dedicated Server for Linux</a>.<br>
 <br>
 My <a href="https://jamesachambers.com/legendary-minecraft-bedrock-container/" target="_blank" rel="noopener">main blog article (and the best place for support) is here</a>.<br>
