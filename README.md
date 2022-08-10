@@ -51,8 +51,10 @@ You can find your exact path by typing: <pre>docker volume inspect yourvolumenam
 On Linux it's typically available at: <pre>/var/lib/docker/volumes/yourvolumename/_data</pre><br>
 On Windows it's at <pre>C:\ProgramData\DockerDesktop</pre> but if you are using WSL (Windows Subsystem for Linux) it may be located at something more like <pre>\wsl$\docker-desktop-data\version-pack-data\community\docker\volumes\</pre><br>
 On Mac it's typically <pre>~/Library/Containers/com.docker.docker/Data/vms/0/</pre><br>
+If you are using Docker Desktop on Mac then you need to access the Docker VM with the following command first:
+<pre>screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty</pre>
+You can then normally access the Docker volumes using the path you found in the first step with docker volume inspect<br><br>
 Most people will want to edit server.properties.  You can make the changes to the file and then restart the container to make them effective.<br>
-<br>
 Backups of the Minecraft are server are created each time the server starts and are stored in the "backups" folder<br>
 <br>
 Log files with timestamps are stored in the "logs" folder.
