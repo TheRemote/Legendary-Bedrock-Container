@@ -78,6 +78,10 @@ For example: <pre>docker run -it -v yourvolumename:/minecraft -e UseQEMU=Y -p 19
 
 <h2>Update History</h2>
 <ul>
+  <li>August 10th 2022</li>
+  <ul>
+    <li>Add nano to have an editor while inside the container (for troubleshooting)</li>
+  </ul>
   <li>August 2nd 2022</li>
   <ul>
     <li>Added experimental Box64 support for aarch64 -- speeds things up for 64-bit ARM users</li>
