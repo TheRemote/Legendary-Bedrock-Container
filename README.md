@@ -85,7 +85,7 @@ For example: <pre>docker run -it -v yourvolumename:/minecraft -e UseQEMU=Y -p 19
   <li>August 12th 2022</li>
   <ul>
     <li>Add "Clean" environment variable to force cleaning and reinstallation of the bedrock server for troubleshooting/repair</li>
-    <li>To use it specify -e Clean=Y on your command line</li>
+    <li>To use it specify -e Clean=Y on your Docker container launch command line</li>
   </ul>
   <li>August 10th 2022</li>
   <ul>
