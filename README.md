@@ -84,6 +84,7 @@ For example: <pre>docker run -it -v yourvolumename:/minecraft -e UseQEMU=Y -p 19
 <ul>
   <li>August 12th 2022</li>
   <ul>
+    <li>Enable "Content Log" in default server.properties which logs errors related to resource and behavior packs</li>
     <li>Add "Clean" environment variable to force cleaning and reinstallation of the bedrock server for troubleshooting/repair</li>
     <li>To use it specify -e Clean=Y on your Docker container launch command line</li>
   </ul>
