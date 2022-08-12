@@ -7,7 +7,8 @@ My <a href="https://jamesachambers.com/legendary-minecraft-bedrock-container/" t
 The <a href="https://github.com/TheRemote/Legendary-Bedrock-Container" target="_blank" rel="noopener">official GitHub repository is located here</a>.<br>
 The <a href="https://hub.docker.com/r/05jchambers/legendary-bedrock-container" target="_blank" rel="noopener">official Docker Hub repository is located here</a>.<br>
 <br>
-The <a href="https://github.com/TheRemote/Legendary-Java-Minecraft-Paper" target="_blank" rel="noopener">Java version of the Docker container is available here</a>.  This is for the Bedrock edition of Minecraft.<br>
+The <a href="https://jamesachambers.com/minecraft-java-bedrock-server-together-geyser-floodgate/" target="_blank" rel="noopener">Java version of the container that has Geyser allowing Bedrock players to connect is here</a><br>
+The <a href="https://github.com/TheRemote/Legendary-Java-Minecraft-Paper" target="_blank" rel="noopener">regular Java version of the Docker container is available here</a>.
 
 <h2>Features</h2>
 <ul>
@@ -63,6 +64,9 @@ Log files with timestamps are stored in the "logs" folder.
 In some scenarios you may want to run a specific version of the Bedrock server.  That is now possible by using the "Version" environment variable: <pre>docker run -it -v yourvolumename:/minecraft -e Version=1.18.33.02 -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
 This is useful if Microsoft hasn't released versions of the client and dedicated server at the same time so you can match whichever version your players can connect with.
 
+<h2>Clean Environment Variable</h2>
+If the server is having trouble starting you can clean the downloads folder and force reinstallation of the latest version: <pre>docker run -it -v yourvolumename:/minecraft -e Clean=Y -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
+
 <h2>Disable Box64 (aarch64 only)</h2>
 Box64 speeds up performance on 64-bit ARM platforms by translating some calls that are normally emulated as native system calls (much faster).  If you are having trouble running the dedicated server with Box64 support you can tell it to use QEMU instead with: <pre>-e UseQEMU=Y</pre>
 For example: <pre>docker run -it -v yourvolumename:/minecraft -e UseQEMU=Y -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
@@ -78,6 +82,11 @@ For example: <pre>docker run -it -v yourvolumename:/minecraft -e UseQEMU=Y -p 19
 
 <h2>Update History</h2>
 <ul>
+  <li>August 12th 2022</li>
+  <ul>
+    <li>Add "Clean" environment variable to force cleaning and reinstallation of the bedrock server for troubleshooting/repair</li>
+    <li>To use it specify -e Clean=Y on your command line</li>
+  </ul>
   <li>August 10th 2022</li>
   <ul>
     <li>Add nano to have an editor while inside the container (for troubleshooting)</li>

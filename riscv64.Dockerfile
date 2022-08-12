@@ -74,6 +74,10 @@ ENV PortIPV6=19133
 # Version environment variable (must exist on Microsoft's servers)
 ENV Version=
 
+# Specifies whether to clean the downloads folder and reinstall the server (set to Y to enable)
+ENV Clean=
+
+
 # IPV4 Ports
 EXPOSE 19132/tcp
 EXPOSE 19132/udp

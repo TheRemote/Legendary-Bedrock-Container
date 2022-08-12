@@ -34,6 +34,13 @@ fi
 # Change directory to server directory
 cd /minecraft
 
+# If clean switch is specified then remove downloads and version_installed.txt
+if [ -n "$Clean" ]; then
+    echo "Cleaning enabled, removing downloads and version_installed.txt..."
+    rm -rf /minecraft/downloads
+    rm -f /minecraft/version_installed.txt
+fi
+
 # Create logs/backups/downloads folder if it doesn't exist
 if [ ! -d "/minecraft/logs" ]; then
     mkdir -p /minecraft/logs
