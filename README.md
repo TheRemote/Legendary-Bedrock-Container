@@ -67,6 +67,9 @@ This is useful if Microsoft hasn't released versions of the client and dedicated
 <h2>Clean Environment Variable</h2>
 If the server is having trouble starting you can clean the downloads folder and force reinstallation of the latest version: <pre>docker run -it -v yourvolumename:/minecraft -e Clean=Y -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
 
+<h2>NoScreen Environment Variable</h2>
+Disables launching the server with the screen application which prevents needing an interactive terminal (but disables some logging): <pre>docker run -it -v yourvolumename:/minecraft -e NoScreen=Y -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
+
 <h2>Disable Box64 (aarch64 only)</h2>
 Box64 speeds up performance on 64-bit ARM platforms by translating some calls that are normally emulated as native system calls (much faster).  If you are having trouble running the dedicated server with Box64 support you can tell it to use QEMU instead with: <pre>-e UseQEMU=Y</pre>
 For example: <pre>docker run -it -v yourvolumename:/minecraft -e UseQEMU=Y -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
@@ -82,6 +85,10 @@ For example: <pre>docker run -it -v yourvolumename:/minecraft -e UseQEMU=Y -p 19
 
 <h2>Update History</h2>
 <ul>
+  <li>August 22nd 2022</li>
+  <ul>
+    <li>Add NoScreen environment variable -- disables screen which prevents needing an interactive terminal (but disables some logging)</li>
+  </ul>
   <li>August 12th 2022</li>
   <ul>
     <li>Enable "Content Log" in default server.properties which logs errors related to resource and behavior packs</li>

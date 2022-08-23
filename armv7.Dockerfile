@@ -76,6 +76,9 @@ ENV Version=
 # Specifies whether to clean the downloads folder and reinstall the server (set to Y to enable)
 ENV Clean=
 
+# Optional switch to prevent usage of screen (disables logging but may fix container launch issues on some platforms)
+ENV NoScreen=
+
 # IPV4 Ports
 EXPOSE 19132/tcp
 EXPOSE 19132/udp
