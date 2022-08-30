@@ -74,6 +74,11 @@ Disables launching the server with the screen application which prevents needing
 Box64 speeds up performance on 64-bit ARM platforms by translating some calls that are normally emulated as native system calls (much faster).  If you are having trouble running the dedicated server with Box64 support you can tell it to use QEMU instead with: <pre>-e UseQEMU=Y</pre>
 For example: <pre>docker run -it -v yourvolumename:/minecraft -e UseQEMU=Y -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
 
+<h2>TZ (timezone) Environment Variable</h2>
+You can change the timezone from the default "America/Denver" to own timezone using this environment variable: <pre>docker run -it -v yourvolumename:/minecraft -e TZ="America/Denver" -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
+A <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">list of Linux timezones is available here</a>
+
+
 <h2>Buy A Coffee / Donate</h2>
 <p>People have expressed some interest in this (you are all saints, thank you, truly)</p>
 <ul>
@@ -85,6 +90,11 @@ For example: <pre>docker run -it -v yourvolumename:/minecraft -e UseQEMU=Y -p 19
 
 <h2>Update History</h2>
 <ul>
+  <li>August 29th 2022</li>
+  <ul>
+    <li>Add TZ environment variable to set timezone</li>
+    <li>Add environment variables to docker-compose.yml template</li>
+  </ul>
   <li>August 22nd 2022</li>
   <ul>
     <li>Add NoScreen environment variable -- disables screen which prevents needing an interactive terminal (but disables some logging)</li>

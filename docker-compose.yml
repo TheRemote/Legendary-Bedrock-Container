@@ -18,6 +18,12 @@ services:
     stdin_open: true # docker run -i
     tty: true # docker run -t
     entrypoint: [ "/bin/bash", "/scripts/start.sh" ]
+    environment:
+      PortIPV4: "19132"
+      PortIPV6: "19133"
+      TZ: "America/Denver" # timezone
+      #NoScreen: "Y" # Disables use of screen
+      #Version: 1.18.33.02 # Set custom version
 volumes:
   minecraftbe:
     driver: local
