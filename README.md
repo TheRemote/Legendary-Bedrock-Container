@@ -115,6 +115,10 @@ See the following links:<br>
 
 <h2>Update History</h2>
 <ul>
+  <li>September 27th 2022</li>
+  <ul>
+      <li>Fix SIGTERM catching in certain situations by running screen/java with the "exec" command which passes execution completely to that process (thanks vp-en)</li>
+  </ul>
   <li>August 29th 2022</li>
   <ul>
     <li>Add TZ environment variable to set timezone</li>
