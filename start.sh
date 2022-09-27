@@ -198,7 +198,7 @@ else
     echo "gawk application was not found -- timestamps will not be available in the logs"
 fi
 if [ -z "$NoScreen" ]; then
-    exec screen -L -Logfile /minecraft/logs/minecraft.$(date +%Y.%m.%d.%H.%M.%S).log -mS minecraftbe /bin/bash -c "${BASH_CMD}"
+    screen -L -Logfile /minecraft/logs/minecraft.$(date +%Y.%m.%d.%H.%M.%S).log -mS minecraftbe /bin/bash -c "${BASH_CMD}"
 else
     echo "NoScreen switch present -- launching without screen (logging will be negatively impacted)"
     exec /bin/bash -c "${BASH_CMD}"
