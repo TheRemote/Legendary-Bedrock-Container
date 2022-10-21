@@ -30,11 +30,11 @@ First you must create a named Docker volume.  This can be done with:<br>
 Now you may launch the server and open the ports necessary with one of the following Docker launch commands:<br>
 <br>
 With default ports:
-<pre>docker run -it -v yourvolumename:/minecraft -p 19132:19132/udp -p 19132:19132 -p 19133:19133/udp -p 19133:19133 05jchambers/legendary-bedrock-container:latest</pre>
+<pre>docker run -it -v yourvolumename:/minecraft -p 19132:19132/udp -p 19132:19132 -p 19133:19133/udp -p 19133:19133 --restart unless-stopped 05jchambers/legendary-bedrock-container:latest</pre>
 With custom ports:
-<pre>docker run -it -v yourvolumename:/minecraft -p 12345:12345/udp -p 12345:12345 -p 12346:12346/udp -p 12346:12346 -e PortIPV4=12345 -e PortIPV6=12346 05jchambers/legendary-bedrock-container:latest</pre>
+<pre>docker run -it -v yourvolumename:/minecraft -p 12345:12345/udp -p 12345:12345 -p 12346:12346/udp -p 12346:12346 -e PortIPV4=12345 -e PortIPV6=12346 --restart unless-stopped 05jchambers/legendary-bedrock-container:latest</pre>
 IPV4 only:
-<pre>docker run -it -v yourvolumename:/minecraft -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
+<pre>docker run -it -v yourvolumename:/minecraft -p 19132:19132/udp -p 19132:19132 --restart unless-stopped 05jchambers/legendary-bedrock-container:latest</pre>
 
 <h2>Configuration / Accessing Server Files</h2>
 The server data is stored where Docker stores your volumes.  This is typically a folder on the host OS that is shared and mounted with the container.<br>
@@ -61,21 +61,26 @@ Backups of the Minecraft are server are created each time the server starts and 
 Log files with timestamps are stored in the "logs" folder.
 
 <h2>Version Override</h2>
-In some scenarios you may want to run a specific version of the Bedrock server.  That is now possible by using the "Version" environment variable: <pre>docker run -it -v yourvolumename:/minecraft -e Version=1.18.33.02 -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
+In some scenarios you may want to run a specific version of the Bedrock server.  That is now possible by using the "Version" environment variable: <pre>docker run -it -v yourvolumename:/minecraft -e Version=1.18.33.02 -p 19132:19132/udp -p 19132:19132 --restart unless-stopped 05jchambers/legendary-bedrock-container:latest</pre>
 This is useful if Microsoft hasn't released versions of the client and dedicated server at the same time so you can match whichever version your players can connect with.
 
 <h2>Clean Environment Variable</h2>
 If the server is having trouble starting you can clean the downloads folder and force reinstallation of the latest version: <pre>docker run -it -v yourvolumename:/minecraft -e Clean=Y -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
 
-<h2>NoScreen Environment Variable</h2>
-Disables launching the server with the screen application which prevents needing an interactive terminal (but disables some logging): <pre>docker run -it -v yourvolumename:/minecraft -e NoScreen=Y -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
-
 <h2>Disable Box64 (aarch64 only)</h2>
 Box64 speeds up performance on 64-bit ARM platforms by translating some calls that are normally emulated as native system calls (much faster).  If you are having trouble running the dedicated server with Box64 support you can tell it to use QEMU instead with: <pre>-e UseQEMU=Y</pre>
-For example: <pre>docker run -it -v yourvolumename:/minecraft -e UseQEMU=Y -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
+For example: <pre>docker run -it -v yourvolumename:/minecraft -e UseQEMU=Y -p 19132:19132/udp -p 19132:19132 --restart unless-stopped 05jchambers/legendary-bedrock-container:latest</pre>
 
 <h2>TZ (timezone) Environment Variable</h2>
 You can change the timezone from the default "America/Denver" to own timezone using this environment variable: <pre>docker run -it -v yourvolumename:/minecraft -e TZ="America/Denver" -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
+A <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">list of Linux timezones is available here</a>
+
+<h2>ScheduleRestart Environment Variable</h2>
+You can schedule a restart by using the ScheduleRestart environment variable with a time in 24 hour format: <pre>docker run -it -v yourvolumename:/minecraft -e ScheduleRestart="03:30" -p 19132:19132/udp -p 19132:19132 --restart unless-stopped 05jchambers/legendary-bedrock-container:latest</pre>
+A <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">list of Linux timezones is available here</a>
+
+<h2>NoPermCheck Environment Variable</h2>
+You can skip the permissions check (can be slow on very large servers) with the NoPermCheck environment variable: <pre>docker run -it -v yourvolumename:/minecraft -e NoPermCheck="Y" -p 19132:19132/udp -p 19132:19132 --restart unless-stopped 05jchambers/legendary-bedrock-container:latest</pre>
 A <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">list of Linux timezones is available here</a>
 
 <h2>Troubleshooting Note - Oracle Virtual Machines</h2>
@@ -126,91 +131,96 @@ This can also be done non-persistently with the following ethtool command: <pre>
 
 <h2>Update History</h2>
 <ul>
+  <li>October 20th 2022</li>
+    <ul>
+      <li>Added new environment variable "NoPermCheck" to skip permissions check during startup</li>
+      <li>Added new environment variable "ScheduleRestart" -- this schedules the container to shut down at a certain time which combined with the --restart switch gives daily reboot functionality</li>
+    </ul>
   <li>September 27th 2022</li>
-  <ul>
-      <li>Fix SIGTERM catching in certain situations by running screen/java with the "exec" command which passes execution completely to that process (thanks vp-en)</li>
-  </ul>
+    <ul>
+        <li>Fix SIGTERM catching in certain situations by running screen/java with the "exec" command which passes execution completely to that process (thanks vp-en)</li>
+    </ul>
   <li>August 29th 2022</li>
-  <ul>
-    <li>Add TZ environment variable to set timezone</li>
-    <li>Add environment variables to docker-compose.yml template</li>
-  </ul>
+    <ul>
+      <li>Add TZ environment variable to set timezone</li>
+      <li>Add environment variables to docker-compose.yml template</li>
+    </ul>
   <li>August 22nd 2022</li>
-  <ul>
-    <li>Add NoScreen environment variable -- disables screen which prevents needing an interactive terminal (but disables some logging)</li>
-  </ul>
+    <ul>
+      <li>Add NoScreen environment variable -- disables screen which prevents needing an interactive terminal (but disables some logging)</li>
+    </ul>
   <li>August 12th 2022</li>
-  <ul>
-    <li>Enable "Content Log" in default server.properties which logs errors related to resource and behavior packs</li>
-    <li>Add "Clean" environment variable to force cleaning and reinstallation of the bedrock server for troubleshooting/repair</li>
-    <li>To use it specify -e Clean=Y on your Docker container launch command line</li>
-  </ul>
+    <ul>
+      <li>Enable "Content Log" in default server.properties which logs errors related to resource and behavior packs</li>
+      <li>Add "Clean" environment variable to force cleaning and reinstallation of the bedrock server for troubleshooting/repair</li>
+      <li>To use it specify -e Clean=Y on your Docker container launch command line</li>
+    </ul>
   <li>August 10th 2022</li>
-  <ul>
-    <li>Add nano to have an editor while inside the container (for troubleshooting)</li>
-  </ul>
+    <ul>
+      <li>Add nano to have an editor while inside the container (for troubleshooting)</li>
+    </ul>
   <li>August 2nd 2022</li>
-  <ul>
-    <li>Added experimental Box64 support for aarch64 -- speeds things up for 64-bit ARM users</li>
-    <li>You must be running a 64-bit OS to benefit from the Box64 increased speeds (both Ubuntu and Raspberry Pi OS have 64-bit versions)</li>
-    <li>An easy way to check and make sure you are running 64 bit is to use <pre>uname -m</pre> which will return "aarch64" if you are on 64-bit ARM</li>
-    <li>If you are having trouble with Box64 (file an issue / leave me a comment on my site so I know about it) you can disable it by adding <pre>-e UseQEMU=Y</pre> to the command line to tell it to use QEMU instead of Box64</li>
-  </ul>
+    <ul>
+      <li>Added experimental Box64 support for aarch64 -- speeds things up for 64-bit ARM users</li>
+      <li>You must be running a 64-bit OS to benefit from the Box64 increased speeds (both Ubuntu and Raspberry Pi OS have 64-bit versions)</li>
+      <li>An easy way to check and make sure you are running 64 bit is to use <pre>uname -m</pre> which will return "aarch64" if you are on 64-bit ARM</li>
+      <li>If you are having trouble with Box64 (file an issue / leave me a comment on my site so I know about it) you can disable it by adding <pre>-e UseQEMU=Y</pre> to the command line to tell it to use QEMU instead of Box64</li>
+    </ul>
   <li>July 14th 2022</li>
-  <ul>
-    <li>Added over a dozen new very recently introduced dependencies -- update container with docker pull 05jchambers/legendary-bedrock-container:latest to get new dependencies</li>
-    <li>Updated from Ubuntu "Impish" to Ubuntu "Latest" base image as libssl3 is now linked in the bedrock_server dependencies</li>
-  </ul>
+    <ul>
+      <li>Added over a dozen new very recently introduced dependencies -- update container with docker pull 05jchambers/legendary-bedrock-container:latest to get new dependencies</li>
+      <li>Updated from Ubuntu "Impish" to Ubuntu "Latest" base image as libssl3 is now linked in the bedrock_server dependencies</li>
+    </ul>
   <li>July 13th 2022</li>
-  <ul>
-    <li>Update base Ubuntu image</li>
-  </ul>
+    <ul>
+      <li>Update base Ubuntu image</li>
+    </ul>
   <li>June 27th 2022</li>
-  <ul>
-    <li>Update base Ubuntu image</li>
-  </ul>
+    <ul>
+      <li>Update base Ubuntu image</li>
+    </ul>
   <li>Jun 11th 2022</li>
-  <ul>
-    <li>Added allowlist.json and permissions.json default template files to prevent crashes when they are missing</li>
-  </ul>
+    <ul>
+      <li>Added allowlist.json and permissions.json default template files to prevent crashes when they are missing</li>
+    </ul>
   <li>Jun 7th 2022</li>
-  <ul>
-    <li>Add docker-compose.yml template for use with docker-compose</li>
-  </ul>
+    <ul>
+      <li>Add docker-compose.yml template for use with docker-compose</li>
+    </ul>
   <li>Jun 2nd 2022</li>
-  <ul>
-    <li>Added a couple of path safety checks and more information about what paths are being used with Version environment variable</li>
-  </ul>
+    <ul>
+      <li>Added a couple of path safety checks and more information about what paths are being used with Version environment variable</li>
+    </ul>
   <li>May 31st 2022</li>
-  <ul>
-    <li>Added default server.properties file to prevent rare container launch issue</li>
-  </ul>
+    <ul>
+      <li>Added default server.properties file to prevent rare container launch issue</li>
+    </ul>
   <li>May 27th 2022</li>
-  <ul>
-    <li>Cleaned up qemu-user-static installation</li>
-  </ul>
+    <ul>
+      <li>Cleaned up qemu-user-static installation</li>
+    </ul>
   <li>May 26th 2022</li>
-  <ul>
-    <li>Fixed issue with new Version environment variable that could lead to it not working</li>
-  </ul>
+    <ul>
+      <li>Fixed issue with new Version environment variable that could lead to it not working</li>
+    </ul>
   <li>May 25th 2022</li>
-  <ul>
-    <li>Added Version environment variable.  Example: -e Version=1.19.10.20</li>
-  </ul>
+    <ul>
+      <li>Added Version environment variable.  Example: -e Version=1.19.10.20</li>
+    </ul>
   <li>May 22nd 2022</li>
-  <ul>
-    <li>Fixed container launch issue on aarch64</li>
-  </ul>
+    <ul>
+      <li>Fixed container launch issue on aarch64</li>
+    </ul>
   <li>May 21st 2022</li>
-  <ul>
-    <li>Added multiarch Docker images</li>
-    <li>Reduced image sizes</li>
-  </ul>
+    <ul>
+      <li>Added multiarch Docker images</li>
+      <li>Reduced image sizes</li>
+    </ul>
   <li>May 17th 2022</li>
-  <ul>
-    <li>Bump Dockerfile base image to ubuntu:latest</li>
-    <li>Add libssl1.1 manual installation baked into base image</li>
-  </ul>
+    <ul>
+      <li>Bump Dockerfile base image to ubuntu:latest</li>
+      <li>Add libssl1.1 manual installation baked into base image</li>
+    </ul>
   <li>May 15th 2022</li>
     <ul>
         <li>Added screen -wipe to beginning of start.sh to prevent a startup issue that could occur if there was a "dead" screen instance (thanks grimholme, <a href="https://github.com/TheRemote/Legendary-Bedrock-Container/issues/2">issue #2</a>).</li>

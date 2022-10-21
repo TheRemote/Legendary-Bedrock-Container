@@ -22,8 +22,9 @@ services:
       PortIPV4: "19132"
       PortIPV6: "19133"
       TZ: "America/Denver" # timezone
-      #NoScreen: "Y" # Disables use of screen
       #Version: 1.18.33.02 # Set custom version
+      #NoPermCheck: "Y" # Optional flag to skip permissions check
+      #ScheduleRestart: "3:30" # Optional restart -- specify time in 24 hour format
 volumes:
   minecraftbe:
     driver: local

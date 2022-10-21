@@ -75,7 +75,17 @@ while [ -z "$DefaultRoute" ]; do
 done
 
 # Take ownership of server files and set correct permissions
-Permissions=$(sudo bash /scripts/fixpermissions.sh -a)
+if [ -z "$NoPermCheck" ]; then
+    Permissions=$(sudo bash /scripts/fixpermissions.sh -a)
+else
+    echo "Skipping permissions check due to NoPermCheck flag"
+fi
+
+# Daily scheduled restart
+if [ -z "$ScheduleRestart" ]; then
+    FutureRestart=$(shutdown -r "$ScheduleRestart")
+    echo "Scheduling daily restart: $FutureRestart"
+fi
 
 # Create backup
 if [ -d "worlds" ]; then
@@ -197,9 +207,5 @@ if command -v gawk &>/dev/null; then
 else
     echo "gawk application was not found -- timestamps will not be available in the logs"
 fi
-if [ -z "$NoScreen" ]; then
-    screen -L -Logfile /minecraft/logs/minecraft.$(date +%Y.%m.%d.%H.%M.%S).log -mS minecraftbe /bin/bash -c "${BASH_CMD}"
-else
-    echo "NoScreen switch present -- launching without screen (logging will be negatively impacted)"
-    exec /bin/bash -c "${BASH_CMD}"
-fi
+
+exec /bin/bash -c "${BASH_CMD}"

@@ -76,11 +76,14 @@ ENV Version=
 # Specifies whether to clean the downloads folder and reinstall the server (set to Y to enable)
 ENV Clean=
 
-# Optional switch to prevent usage of screen (disables logging but may fix container launch issues on some platforms)
-ENV NoScreen=
-
 # Optional Timezone
 ENV TZ="America/Denver"
+
+# Optional switch to skip permissions check
+ENV NoPermCheck=""
+
+# Optional switch to schedule a daily restart (use 24 hour time format like 3:30 for 3:30am)
+ENV ScheduleRestart=""
 
 # IPV4 Ports
 EXPOSE 19132/tcp
