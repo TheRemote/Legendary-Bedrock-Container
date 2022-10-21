@@ -129,6 +129,10 @@ This can also be done non-persistently with the following ethtool command: <pre>
 
 <h2>Update History</h2>
 <ul>
+  <li>October 21st 2022</li>
+    <ul>
+      <li>Added new environment variable "BackupCount" to control the number of backups the container keeps</li>
+    </ul>
   <li>October 20th 2022</li>
     <ul>
       <li>Added new environment variable "NoPermCheck" to skip permissions check during startup</li>
