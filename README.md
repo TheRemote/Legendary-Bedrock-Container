@@ -77,11 +77,9 @@ A <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">list of
 
 <h2>ScheduleRestart Environment Variable</h2>
 You can schedule a restart by using the ScheduleRestart environment variable with a time in 24 hour format: <pre>docker run -it -v yourvolumename:/minecraft -e ScheduleRestart="03:30" -p 19132:19132/udp -p 19132:19132 --restart unless-stopped 05jchambers/legendary-bedrock-container:latest</pre>
-A <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">list of Linux timezones is available here</a>
 
 <h2>NoPermCheck Environment Variable</h2>
 You can skip the permissions check (can be slow on very large servers) with the NoPermCheck environment variable: <pre>docker run -it -v yourvolumename:/minecraft -e NoPermCheck="Y" -p 19132:19132/udp -p 19132:19132 --restart unless-stopped 05jchambers/legendary-bedrock-container:latest</pre>
-A <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">list of Linux timezones is available here</a>
 
 <h2>Troubleshooting Note - Oracle Virtual Machines</h2>
 A very common problem people have with the Oracle Virtual Machine tutorials out there that typically show you how to use a free VM is that the VM is much more difficult to configure than just about any other product / offering out there.<br>
