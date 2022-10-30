@@ -83,6 +83,8 @@ fi
 
 # Daily scheduled restart
 if [ -z "$ScheduleRestart" ]; then
+    echo "No daily restart scheduled"
+else
     FutureRestart=$(shutdown -r "$ScheduleRestart")
     echo "Scheduling daily restart: $FutureRestart"
 fi
