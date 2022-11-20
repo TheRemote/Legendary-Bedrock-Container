@@ -25,6 +25,7 @@ services:
       BackupCount: 10 # Number of rolling backups to keep
       #Version: 1.18.33.02 # Set custom version
       #NoPermCheck: "Y" # Optional flag to skip permissions check
+      #QuietCurl: "Y" # Optional flag to reduce curl log output by suppressing progress meter
       #ScheduleRestart: "3:30" # Optional restart -- specify time in 24 hour format
 volumes:
   minecraftbe:

@@ -88,6 +88,9 @@ ENV ScheduleRestart=""
 # Number of rolling backups to keep
 ENV BackupCount=10
 
+# Optional switch to tell curl to suppress the progress meter which generates much less noise in the logs
+ENV QuietCurl=""
+
 # IPV4 Ports
 EXPOSE 19132/tcp
 EXPOSE 19132/udp

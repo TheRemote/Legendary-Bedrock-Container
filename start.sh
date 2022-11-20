@@ -83,7 +83,9 @@ done
 
 # Take ownership of server files and set correct permissions
 if [ -z "$NoPermCheck" ]; then
-    Permissions=$(sudo bash /scripts/fixpermissions.sh -a)
+    echo "Taking ownership of all server files/folders in /minecraft..."
+    sudo -n chown -R $(whoami) /minecraft >/dev/null 2>&1
+    echo "Complete"
 else
     echo "Skipping permissions check due to NoPermCheck flag"
 fi
@@ -121,12 +123,20 @@ fi
 echo "Checking for the latest version of Minecraft Bedrock server ..."
 
 # Test internet connectivity first
-curl -H "Accept-Encoding: identity" -H "Accept-Language: en" -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.$RandNum.212 Safari/537.36" -s google.com -o /dev/null
+if [ -z "$QuietCurl" ]; then
+    curl -H "Accept-Encoding: identity" -H "Accept-Language: en" -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.$RandNum.212 Safari/537.36" -s google.com -o /dev/null
+else
+    curl --no-progress-meter -H "Accept-Encoding: identity" -H "Accept-Language: en" -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.$RandNum.212 Safari/537.36" -s google.com -o /dev/null
+fi
 if [ "$?" != 0 ]; then
     echo "Unable to connect to update website (internet connection may be down).  Skipping update ..."
 else
     # Download server index.html to check latest version
-    curl -H "Accept-Encoding: identity" -H "Accept-Language: en" -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.$RandNum.212 Safari/537.36" -o /minecraft/downloads/version.html https://www.minecraft.net/en-us/download/server/bedrock
+    if [ -z "$QuietCurl" ]; then
+        curl -H "Accept-Encoding: identity" -H "Accept-Language: en" -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.$RandNum.212 Safari/537.36" -o /minecraft/downloads/version.html https://www.minecraft.net/en-us/download/server/bedrock
+    else
+        curl --no-progress-meter -H "Accept-Encoding: identity" -H "Accept-Language: en" -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.$RandNum.212 Safari/537.36" -o /minecraft/downloads/version.html https://www.minecraft.net/en-us/download/server/bedrock
+    fi
     LatestURL=$(grep -o 'https://minecraft.azureedge.net/bin-linux/[^"]*' downloads/version.html)
 
     LatestFile=$(echo "$LatestURL" | sed 's#.*/##')
@@ -151,7 +161,11 @@ else
 
         # Download version of Minecraft Bedrock dedicated server if it's not already local
         if [ ! -f "downloads/$DownloadFile" ]; then
-            curl -H "Accept-Encoding: identity" -H "Accept-Language: en" -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.$RandNum.212 Safari/537.36" -o "downloads/$DownloadFile" "$DownloadURL"
+            if [ -z "$QuietCurl" ]; then
+                curl -H "Accept-Encoding: identity" -H "Accept-Language: en" -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.$RandNum.212 Safari/537.36" -o "downloads/$DownloadFile" "$DownloadURL"
+            else
+                curl --no-progress-meter -H "Accept-Encoding: identity" -H "Accept-Language: en" -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.$RandNum.212 Safari/537.36" -o "downloads/$DownloadFile" "$DownloadURL"
+            fi
         fi
 
         # Install version of Minecraft requested
@@ -169,7 +183,11 @@ else
 
         # Download version of Minecraft Bedrock dedicated server if it's not already local
         if [ ! -f "downloads/$DownloadFile" ]; then
-            curl -H "Accept-Encoding: identity" -H "Accept-Language: en" -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.$RandNum.212 Safari/537.36" -o "downloads/$DownloadFile" "$DownloadURL"
+            if [ -z "$QuietCurl" ]; then
+                curl -H "Accept-Encoding: identity" -H "Accept-Language: en" -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.$RandNum.212 Safari/537.36" -o "downloads/$DownloadFile" "$DownloadURL"
+            else
+                curl --no-progress-meter -H "Accept-Encoding: identity" -H "Accept-Language: en" -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.$RandNum.212 Safari/537.36" -o "downloads/$DownloadFile" "$DownloadURL"
+            fi
         fi
 
         # Install version of Minecraft requested
