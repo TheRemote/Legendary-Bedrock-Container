@@ -83,9 +83,6 @@ ENV TZ="America/Denver"
 # Optional switch to skip permissions check
 ENV NoPermCheck=""
 
-# Optional switch to schedule a daily restart (use 24 hour time format like 3:30 for 3:30am)
-ENV ScheduleRestart=""
-
 # Number of rolling backups to keep
 ENV BackupCount=10
 
