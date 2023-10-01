@@ -107,5 +107,6 @@ COPY permissions.json /scripts/
 
 # Get qemu-user-static
 RUN curl -o /scripts/qemu.deb -k -L $(apt-get download --print-uris qemu-user-static | cut -d"'" -f2); dpkg -x /scripts/qemu.deb /tmp; rm -rf /scripts/qemu.deb; cp -Rf /tmp/usr/libexec* /usr/libexec; cp -Rf /tmp/usr/share/binfmts /usr/share/binfmts; cp /tmp/usr/bin/qemu-x86_64-static /usr/bin/qemu-x86_64-static; rm -rf /tmp/*
+
 # Set entrypoint to start.sh script
 ENTRYPOINT ["/bin/bash", "/scripts/start.sh"]
