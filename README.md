@@ -132,6 +132,7 @@ This can also be done non-persistently with the following ethtool command: <pre>
   <li>October 1st 2023</li>
     <ul>
       <li>Refresh packages and dependencies</li>
+      <li>Fix arm64 builds</li>
     </ul>
   <li>January 14th 2023</li>
     <ul>
