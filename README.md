@@ -129,6 +129,10 @@ This can also be done non-persistently with the following ethtool command: <pre>
 
 <h2>Update History</h2>
 <ul>
+  <li>December 13th 2023</li>
+    <ul>
+      <li>Refresh packages and dependencies</li>
+    </ul>
   <li>October 1st 2023</li>
     <ul>
       <li>Refresh packages and dependencies</li>
