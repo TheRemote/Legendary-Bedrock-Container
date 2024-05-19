@@ -131,6 +131,8 @@ This can also be done non-persistently with the following ethtool command: <pre>
 <ul>
   <li>May 19th 2024</li>
     <ul>
+      <li>Added Raspberry Pi 5 support</li>
+      <li>Pull image 05jchambers/legendary-bedrock-container:pi5 for 5k block size and 05jchambers/legendary-bedrock-container:pi5-16k for 16K block size</li>
       <li>Fixed dependencies from latest ldd of bedrock_server</li>
       <li>Removed OpenSSL 1.1 installation as it is no longer needed</li>
     </ul>
