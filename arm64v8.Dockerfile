@@ -57,7 +57,7 @@ COPY --from=builder /lib/x86_64-linux-gnu/libresolv.so.2 /lib/x86_64-linux-gnu/l
 COPY --from=builder /lib/x86_64-linux-gnu/libffi.so.8 /lib/x86_64-linux-gnu/libffi.so.8
 
 # Fetch dependencies
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils -yqq && DEBIAN_FRONTEND=noninteractive apt-get install systemd-sysv tzdata sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4t64 libc6 libcrypt1 libcurl4-openssl-dev ca-certificates binfmt-support libssl3t64 gpg -yqq
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils -yqq && DEBIAN_FRONTEND=noninteractive apt-get install tzdata sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4t64 libc6 libcrypt1 libcurl4-openssl-dev ca-certificates binfmt-support libssl3t64 gpg -yqq
 
 # Set port environment variables
 ENV PortIPV4=19132
@@ -107,6 +107,9 @@ RUN apt-get update && apt-get install box64-arm64 -y
 
 # Get qemu-user-static
 RUN curl -o /scripts/qemu.deb -k -L $(apt-get download --print-uris qemu-user-static | cut -d"'" -f2); dpkg -x /scripts/qemu.deb /tmp; rm -rf /scripts/qemu.deb; cp -Rf /tmp/usr/libexec* /usr/libexec; cp -Rf /tmp/usr/share/binfmts /usr/share/binfmts; cp /tmp/usr/bin/qemu-x86_64-static /usr/bin/qemu-x86_64-static; rm -rf /tmp/*
+
+# Clear apt cache
+RUN rm -rf /var/cache/apt/*
 
 # Set entrypoint to start.sh
 ENTRYPOINT ["/bin/bash", "/scripts/start.sh"]
