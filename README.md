@@ -20,7 +20,8 @@ The <a href="https://github.com/TheRemote/Legendary-Java-Minecraft-Paper" target
   <li>Supports multiple instances -- you can run multiple Bedrock servers on the same system</li>
   <li>Updates automatically to the latest or user-defined version when server is started</li>
   <li>Files stored in named Docker volume allowing for extremely easy access/editing and leveraging more advanced Docker features such as automatic volume backups</li>
-  <li><strong>*NEW*</strong> Uses Box64 for aarch64 (ARM 64 bit) for improved emulation speed due to box64's use of native syscalls where possible</li>
+  <li>Uses Box64 for aarch64 (ARM 64 bit) for improved emulation speed due to box64's use of native syscalls where possible</li>
+  <li><strong>*NEW*</strong>Raspberry Pi 5 and RK3588 Box64-optimized support</li>
 </ul>
 
 <h2>Usage</h2>
