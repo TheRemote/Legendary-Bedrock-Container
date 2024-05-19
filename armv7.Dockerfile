@@ -3,13 +3,13 @@
 # GitHub Repository: https://github.com/TheRemote/Legendary-Bedrock-Container
 
 # Use latest Ubuntu version for builder
-FROM ubuntu:mantic AS builder
+FROM ubuntu:latest AS builder
 
 # Update apt
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install qemu-user-static binfmt-support apt-utils libcurl4 libssl-dev -yqq && rm -rf /var/cache/apt/*
 
 # Use latest Ubuntu version
-FROM --platform=linux/arm/v7 ubuntu:mantic
+FROM --platform=linux/arm/v7 ubuntu:latest
 
 # Add QEMU
 COPY --from=builder /usr/bin/qemu-arm-static /usr/bin/
