@@ -48,9 +48,6 @@ RUN chmod -R +x /scripts/*.sh
 COPY server.properties /scripts/
 COPY allowlist.json /scripts/
 COPY permissions.json /scripts/
-# Install libssl 1.1
-COPY libssl1-1.deb /scripts/
-RUN dpkg -x /scripts/libssl1-1.deb /tmp/ext; rm -rf /scripts/libssl1-1.deb; cp -Rf /tmp/ext/usr/lib/x86_64-linux-gnu/* /usr/lib/x86_64-linux-gnu/
 
 # Set entrypoint to start.sh
 ENTRYPOINT ["/bin/bash", "/scripts/start.sh"]

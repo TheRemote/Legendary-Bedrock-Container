@@ -131,7 +131,8 @@ This can also be done non-persistently with the following ethtool command: <pre>
 <ul>
   <li>May 19th 2024</li>
     <ul>
-      <li>Refresh packages and dependencies</li>
+      <li>Fixed dependencies from latest ldd of bedrock_server</li>
+      <li>Removed OpenSSL 1.1 installation as it is no longer needed</li>
     </ul>
   <li>December 13th 2023</li>
     <ul>
