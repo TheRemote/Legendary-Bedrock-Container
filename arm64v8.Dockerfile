@@ -6,7 +6,7 @@
 FROM ubuntu:latest AS builder
 
 # Update apt
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install qemu-user-static binfmt-support apt-utils libcurl4 libssl-dev -yqq && rm -rf /var/cache/apt/*
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install qemu-user-static binfmt-support apt-utils libcurl4t64 libssl-dev -yqq && rm -rf /var/cache/apt/*
 
 # Use latest Ubuntu version
 FROM --platform=linux/arm64/v8 ubuntu:latest
@@ -57,7 +57,7 @@ COPY --from=builder /lib/x86_64-linux-gnu/libresolv.so.2 /lib/x86_64-linux-gnu/l
 COPY --from=builder /lib/x86_64-linux-gnu/libffi.so.8 /lib/x86_64-linux-gnu/libffi.so.8
 
 # Fetch dependencies
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils -yqq && DEBIAN_FRONTEND=noninteractive apt-get install systemd-sysv tzdata sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4 libc6 libcrypt1 libcurl4-openssl-dev ca-certificates binfmt-support libssl3 gpg -yqq
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils -yqq && DEBIAN_FRONTEND=noninteractive apt-get install systemd-sysv tzdata sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4t64 libc6 libcrypt1 libcurl4-openssl-dev ca-certificates binfmt-support libssl3t64 gpg -yqq
 
 # Set port environment variables
 ENV PortIPV4=19132
