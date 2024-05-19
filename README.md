@@ -64,6 +64,11 @@ Log files with timestamps are stored in the "logs" folder.
 In some scenarios you may want to run a specific version of the Bedrock server.  That is now possible by using the "Version" environment variable: <pre>docker run -it -v yourvolumename:/minecraft -e Version=1.18.33.02 -p 19132:19132/udp -p 19132:19132 --restart unless-stopped 05jchambers/legendary-bedrock-container:latest</pre>
 This is useful if Microsoft hasn't released versions of the client and dedicated server at the same time so you can match whichever version your players can connect with.
 
+<h2>Raspberry Pi 5 Support</h2>
+If you try to use Box64 with the Raspberry Pi 5 using the default ARM64 branch it will give you a block size error.<br>
+There are two images for the Raspberry Pi.  The default 5K block size as well as a 16K block size image.<br>
+To use these use either 05jchambers/legendary-bedrock-container:pi5 or 05jchambers/legendary-bedrock-container:pi5-64k</pre>
+
 <h2>Clean Environment Variable</h2>
 If the server is having trouble starting you can clean the downloads folder and force reinstallation of the latest version: <pre>docker run -it -v yourvolumename:/minecraft -e Clean=Y -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
 
