@@ -70,6 +70,10 @@ There are two images for the Raspberry Pi.  The default 5K block size as well as
 These are available as 05jchambers/legendary-bedrock-container:pi5 or 05jchambers/legendary-bedrock-container:pi5-64k<br>
 Use those in place of :latest or :arm64 on the Raspberry Pi 5</pre>
 
+<h2>RK3588 Support</h2>
+If you are using a RK3588-based board there is a Box64 optimized image available for the board<br>
+To use it use 05jchambers/legendary-bedrock-container:rk3588 in place of :latest or :arm64
+
 <h2>Clean Environment Variable</h2>
 If the server is having trouble starting you can clean the downloads folder and force reinstallation of the latest version: <pre>docker run -it -v yourvolumename:/minecraft -e Clean=Y -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
 
