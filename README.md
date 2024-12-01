@@ -68,7 +68,7 @@ This is useful if Microsoft hasn't released versions of the client and dedicated
 <h2>Raspberry Pi 5 Support</h2>
 If you try to use Box64 with the Raspberry Pi 5 using the default ARM64 branch it will give you a block size error.<br>
 There are two images for the Raspberry Pi.  The default 5K block size as well as a 16K block size image.<br>
-These are available as 05jchambers/legendary-bedrock-container:pi5 or 05jchambers/legendary-bedrock-container:pi5-64k<br>
+These are available as 05jchambers/legendary-bedrock-container:pi5 or 05jchambers/legendary-bedrock-container:pi5-16k<br>
 Use those in place of :latest or :arm64 on the Raspberry Pi 5</pre>
 
 <h2>RK3588 Support</h2>
