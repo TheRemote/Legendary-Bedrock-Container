@@ -18,10 +18,6 @@ manifests:
     platform:
       architecture: ppc64le
       os: linux
-  - image: 05jchambers/legendary-bedrock-container:riscv64
-    platform:
-      architecture: riscv64
-      os: linux
   - image: 05jchambers/legendary-bedrock-container:s390x
     platform:
       architecture: s390x
