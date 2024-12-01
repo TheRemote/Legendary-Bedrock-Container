@@ -140,6 +140,10 @@ This can also be done non-persistently with the following ethtool command: <pre>
 
 <h2>Update History</h2>
 <ul>
+  <li>December 1st 2024</li>
+    <ul>
+      <li>Fix issues with download URL</li>
+    </ul>
   <li>May 19th 2024</li>
     <ul>
       <li>Added Raspberry Pi 5 and RK3588 support</li>
