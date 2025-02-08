@@ -140,6 +140,10 @@ This can also be done non-persistently with the following ethtool command: <pre>
 
 <h2>Update History</h2>
 <ul>
+  <li>February 8th 2025</li>
+    <ul>
+      <li>Updated dependencies</li>
+    </ul>
   <li>December 1st 2024</li>
     <ul>
       <li>Fix issues with download URL</li>
