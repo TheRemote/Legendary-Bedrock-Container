@@ -212,14 +212,8 @@ echo "Starting Minecraft server..."
 CPUArch=$(uname -m)
 if [[ "$CPUArch" == *"x86_64"* ]]; then
     BASH_CMD="./bedrock_server"
-elif [[ "$CPUArch" == *"aarch64"* ]]; then
-    if [ -z "$UseQEMU" ]; then
-        BASH_CMD="box64 bedrock_server"
-    else
-        BASH_CMD="qemu-x86_64-static bedrock_server"
-    fi
 else
-    BASH_CMD="qemu-x86_64-static bedrock_server"
+    BASH_CMD="qemu-x86_64 bedrock_server"
 fi
 if command -v gawk &>/dev/null; then
     BASH_CMD+=$' | gawk \'{ print strftime(\"[%Y-%m-%d %H:%M:%S]\"), $0 }\''

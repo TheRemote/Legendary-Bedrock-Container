@@ -20,8 +20,6 @@ The <a href="https://github.com/TheRemote/Legendary-Java-Minecraft-Paper" target
   <li>Supports multiple instances -- you can run multiple Bedrock servers on the same system</li>
   <li>Updates automatically to the latest or user-defined version when server is started</li>
   <li>Files stored in named Docker volume allowing for extremely easy access/editing and leveraging more advanced Docker features such as automatic volume backups</li>
-  <li>Uses Box64 for aarch64 (ARM 64 bit) for improved emulation speed due to box64's use of native syscalls where possible</li>
-  <li><strong>*NEW*</strong>Raspberry Pi 5 and RK3588 Box64-optimized support</li>
 </ul>
 
 <h2>Usage</h2>
@@ -65,22 +63,8 @@ Log files with timestamps are stored in the "logs" folder.
 In some scenarios you may want to run a specific version of the Bedrock server.  That is now possible by using the "Version" environment variable: <pre>docker run -it -v yourvolumename:/minecraft -e Version=1.18.33.02 -p 19132:19132/udp -p 19132:19132 --restart unless-stopped 05jchambers/legendary-bedrock-container:latest</pre>
 This is useful if Microsoft hasn't released versions of the client and dedicated server at the same time so you can match whichever version your players can connect with.
 
-<h2>Raspberry Pi 5 Support</h2>
-If you try to use Box64 with the Raspberry Pi 5 using the default ARM64 branch it will give you a block size error.<br>
-There are two images for the Raspberry Pi.  The default 5K block size as well as a 16K block size image.<br>
-These are available as 05jchambers/legendary-bedrock-container:pi5 or 05jchambers/legendary-bedrock-container:pi5-16k<br>
-Use those in place of :latest or :arm64 on the Raspberry Pi 5</pre>
-
-<h2>RK3588 Support</h2>
-If you are using a RK3588-based board there is a Box64 optimized image available for the board<br>
-To use it use 05jchambers/legendary-bedrock-container:rk3588 in place of :latest or :arm64
-
 <h2>Clean Environment Variable</h2>
 If the server is having trouble starting you can clean the downloads folder and force reinstallation of the latest version: <pre>docker run -it -v yourvolumename:/minecraft -e Clean=Y -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
-
-<h2>Disable Box64 (aarch64 only)</h2>
-Box64 speeds up performance on 64-bit ARM platforms by translating some calls that are normally emulated as native system calls (much faster).  If you are having trouble running the dedicated server with Box64 support you can tell it to use QEMU instead with: <pre>-e UseQEMU=Y</pre>
-For example: <pre>docker run -it -v yourvolumename:/minecraft -e UseQEMU=Y -p 19132:19132/udp -p 19132:19132 --restart unless-stopped 05jchambers/legendary-bedrock-container:latest</pre>
 
 <h2>TZ (timezone) Environment Variable</h2>
 You can change the timezone from the default "America/Denver" to own timezone using this environment variable: <pre>docker run -it -v yourvolumename:/minecraft -e TZ="America/Denver" -p 19132:19132/udp -p 19132:19132 05jchambers/legendary-bedrock-container:latest</pre>
@@ -140,6 +124,11 @@ This can also be done non-persistently with the following ethtool command: <pre>
 
 <h2>Update History</h2>
 <ul>
+  <li>July 26h 2025</li>
+    <ul>
+      <li>Upgraded to buildx building process for multi-arch images</li>
+      <li>Removed Box64 as it has not been working with newer builds for some time</li>
+    </ul>
   <li>July 24th 2025</li>
     <ul>
       <li>Fixed issues with download URL</li>

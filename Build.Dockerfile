@@ -3,16 +3,13 @@
 # GitHub Repository: https://github.com/TheRemote/Legendary-Bedrock-Container
 
 # Use latest Ubuntu version for builder
-FROM ubuntu:latest AS builder
+FROM --platform=linux/amd64 ubuntu:latest AS builder
 
 # Update apt
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install qemu-user-static binfmt-support apt-utils libcurl4t64 libssl-dev -yqq && rm -rf /var/cache/apt/*
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils libcurl4t64 libssl-dev -yqq && rm -rf /var/cache/apt/*
 
 # Use latest Ubuntu version
-FROM --platform=linux/arm64/v8 ubuntu:latest
-
-# Add QEMU
-COPY --from=builder /usr/bin/qemu-aarch64-static /usr/bin/
+FROM --platform=$TARGETPLATFORM ubuntu:latest
 
 # Copy bedrock_server dynamically linked dependencies (ldd bedrock_server to see which dependencies need to be copied)
 RUN mkdir -p /lib64/
@@ -29,7 +26,7 @@ COPY --from=builder /lib/x86_64-linux-gnu/librt.so.1 /lib/x86_64-linux-gnu/librt
 COPY --from=builder /lib/x86_64-linux-gnu/libnghttp2.so.14 /lib/x86_64-linux-gnu/libnghttp2.so.14
 COPY --from=builder /lib/x86_64-linux-gnu/libidn2.so.0 /lib/x86_64-linux-gnu/libidn2.so.0
 COPY --from=builder /lib/x86_64-linux-gnu/librtmp.so.1 /lib/x86_64-linux-gnu/librtmp.so.1
-COPY --from=builder /lib/x86_64-linux-gnu/libssh.so.4 /lib/x86_64-linux-gnu/libssh.so.4
+COPY --from=builder /lib/x86_64-linux-gnu/libssh2.so.1 /lib/x86_64-linux-gnu/libssh2.so.1
 COPY --from=builder /lib/x86_64-linux-gnu/libpsl.so.5 /lib/x86_64-linux-gnu/libpsl.so.5
 COPY --from=builder /lib/x86_64-linux-gnu/libssl.so.3 /lib/x86_64-linux-gnu/libssl.so.3
 COPY --from=builder /lib/x86_64-linux-gnu/libcrypto.so.3 /lib/x86_64-linux-gnu/libcrypto.so.3
@@ -57,7 +54,7 @@ COPY --from=builder /lib/x86_64-linux-gnu/libresolv.so.2 /lib/x86_64-linux-gnu/l
 COPY --from=builder /lib/x86_64-linux-gnu/libffi.so.8 /lib/x86_64-linux-gnu/libffi.so.8
 
 # Fetch dependencies
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils -yqq && DEBIAN_FRONTEND=noninteractive apt-get install tzdata sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4t64 libc6 libcrypt1 libcurl4-openssl-dev ca-certificates binfmt-support libssl3t64 gpg -yqq
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install apt-utils -yqq && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends tzdata sudo curl unzip screen net-tools gawk openssl findutils pigz libcurl4t64 libc6 libcrypt1 libcurl4-openssl-dev ca-certificates qemu-user binfmt-support libssl3t64 gpg -yqq && rm -rf /var/cache/apt/*
 
 # Set port environment variables
 ENV PortIPV4=19132
@@ -89,9 +86,6 @@ EXPOSE 19132/udp
 EXPOSE 19133/tcp
 EXPOSE 19133/udp
 
-# Environment variable to force QEMU usage instead of Box64
-ENV UseQEMU=
-
 # Copy scripts to minecraftbe folder and make them executable
 RUN mkdir /scripts
 COPY *.sh /scripts/
@@ -99,17 +93,6 @@ RUN chmod -R +x /scripts/*.sh
 COPY server.properties /scripts/
 COPY allowlist.json /scripts/
 COPY permissions.json /scripts/
-
-# Get Box64
-RUN curl -k -L -o /etc/apt/sources.list.d/box64.list https://ryanfortner.github.io/box64-debs/box64.list
-RUN curl -k -L https://ryanfortner.github.io/box64-debs/KEY.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/box64-debs-archive-keyring.gpg
-RUN apt-get update && apt-get install box64-rpi5arm64 -y
-
-# Get qemu-user-static
-RUN curl -o /scripts/qemu.deb -k -L $(apt-get download --print-uris qemu-user-static | cut -d"'" -f2); dpkg -x /scripts/qemu.deb /tmp; rm -rf /scripts/qemu.deb; cp -Rf /tmp/usr/libexec* /usr/libexec; cp -Rf /tmp/usr/share/binfmts /usr/share/binfmts; cp /tmp/usr/bin/qemu-x86_64-static /usr/bin/qemu-x86_64-static; rm -rf /tmp/*
-
-# Clear apt cache
-RUN rm -rf /var/cache/apt/*
 
 # Set entrypoint to start.sh
 ENTRYPOINT ["/bin/bash", "/scripts/start.sh"]
