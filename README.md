@@ -127,7 +127,7 @@ This can also be done non-persistently with the following ethtool command: <pre>
   <li>July 26h 2025</li>
     <ul>
       <li>Upgraded to buildx building process for multi-arch images</li>
-      <li>Removed Box64 as it has not been working with newer builds for some time</li>
+      <li>Removed Box64 experimental support as it has not been working with newer builds for some time</li>
     </ul>
   <li>July 24th 2025</li>
     <ul>
