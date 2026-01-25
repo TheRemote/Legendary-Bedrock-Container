@@ -124,6 +124,10 @@ This can also be done non-persistently with the following ethtool command: <pre>
 
 <h2>Update History</h2>
 <ul>
+  <li>January 25th 2026</li>
+    <ul>
+      <li>Upgraded packages included in image</li>
+    </ul>
   <li>July 26h 2025</li>
     <ul>
       <li>Upgraded to buildx building process for multi-arch images</li>
